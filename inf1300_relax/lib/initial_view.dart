@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'secondPage.dart';
+import 'imagesPage.dart';
 
 
 class MainPage extends StatefulWidget {
@@ -59,6 +60,20 @@ class _MainPageState extends State<MainPage> {
             },
             child: const Text(
               'Ir nivel 1 de push',
+              style: TextStyle(fontSize: 20)
+            ),
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                 builder: (context) => ImagesPage(),
+                ),  
+              );
+            },
+            child: const Text(
+              'Images',
               style: TextStyle(fontSize: 20)
             ),
           ),
