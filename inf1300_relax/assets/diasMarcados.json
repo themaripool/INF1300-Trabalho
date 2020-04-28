@@ -1,0 +1,92 @@
+[
+    {
+        "id": "1",
+        "diaSemana": "Domingo",
+        "intDiaSemana": "01",
+        "humor": "😁"
+    },
+    {
+        "id": "2",
+        "diaSemana": "Segunda",
+        "intDiaSemana": "02",
+        "humor": "😁"
+    },
+    {
+        "id": "3",
+        "diaSemana": "Terça",
+        "intDiaSemana": "03",
+        "humor": "😁"
+    },
+    {
+        "id": "4",
+        "diaSemana": "Quarta",
+        "intDiaSemana": "04",
+        "humor": "😑"
+    },
+    {
+        "id": "5",
+        "diaSemana": "Quinta",
+        "intDiaSemana": "05",
+        "humor": "😔"
+    },
+    {
+        "id": "6",
+        "diaSemana": "Sexta",
+        "intDiaSemana": "06",
+        "humor": "😔"
+    },
+    {
+        "id": "7",
+        "diaSemana": "Sábado",
+        "intDiaSemana": "07",
+        "humor": "😑"
+    },
+    {
+        "id": "8",
+        "diaSemana": "Domingo",
+        "intDiaSemana": "08",
+        "humor": "😑"
+    },
+    {
+        "id": "9",
+        "diaSemana": "Segunda",
+        "intDiaSemana": "09",
+        "humor": "😔"
+    },
+    {
+        "id": "10",
+        "diaSemana": "Terça",
+        "intDiaSemana": "10",
+        "humor": "😑"
+    },
+    {
+        "id": "11",
+        "diaSemana": "Quarta",
+        "intDiaSemana": "11",
+        "humor": "😔"
+    },
+    {
+        "id": "12",
+        "diaSemana": "Quinta",
+        "intDiaSemana": "12",
+        "humor": "😁"
+    },
+    {
+        "id": "13",
+        "diaSemana": "Sexta",
+        "intDiaSemana": "13",
+        "humor": "😁"
+    },
+    {
+        "id": "14",
+        "diaSemana": "Sábado",
+        "intDiaSemana": "14",
+        "humor": "😑"
+    },
+    {
+        "id": "15",
+        "diaSemana": "Domingo",
+        "intDiaSemana": "15",
+        "humor": "😑"
+    }
+]

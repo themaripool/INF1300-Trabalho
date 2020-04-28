@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'thirdPage.dart';
+import 'package:fcharts/fcharts.dart';
+
 
 
 class SecongPage extends StatefulWidget {
@@ -13,64 +15,75 @@ class SecongPage extends StatefulWidget {
 }
 
 class _SecongPageState extends State<SecongPage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
 
-  
+  static const myData = [
+    ["Seg", "😁"],
+    ["Ter", "😑"],
+    ["Qua", "😁"],
+    ["Qui", "😔"],
+    ["Sex", "😑"],
+    ["Sáb", "😔"],
+    ["Dom", "😁"],
+  ];
+ 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Relax'),
+         elevation: 0.0,
+        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Center(
         child: Column(
 
           children: <Widget>[
 
-          RaisedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                 builder: (context) => ThirdPage (),
-                ),  
-              );
-            },
-            child: const Text(
-              'Ir nivel 2 de push',
-              style: TextStyle(fontSize: 20)
+            Divider(),
+
+            Container(
+
+              width: 300,
+              height: 250,
+
+              child:
+              LineChart(
+                
+                lines: [
+                  new Line<List<String>, String, String>( // max de 7 porque se repitir dia da semana buga
+                    data: myData,
+                    xFn: (datum) => datum[0],
+                    yFn: (datum) => datum[1],
+                  ),
+                ],
+              ),
             ),
-          ),
 
+            Divider(),
+
+            RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                  builder: (context) => ThirdPage (),
+                  ),  
+                );
+              },
+              child: const Text(
+                'Ir para histórico de humor',
+                style: TextStyle(fontSize: 20)
+              ),
+            ),
           ],
-
-
-
         )
-      ),
-
-
-    
+      ),    
     );
   }
 }
+
+
 
 
 

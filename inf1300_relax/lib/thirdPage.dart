@@ -1,6 +1,9 @@
 
-import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'fourthPage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:async';
 
 
 class ThirdPage extends StatefulWidget {
@@ -13,60 +16,91 @@ class ThirdPage extends StatefulWidget {
 }
 
 class _ThirdPageState extends State<ThirdPage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
 
- 
+  List data;
+
+  Future<String> loadJsonData() async {
+    
+    var jsonText = await rootBundle.loadString('assets/diasMarcados.json');
+
+    setState(() {
+      data = json.decode(jsonText);
+    });
+    
+  }
+
+  @override
+  void initState() { // called before this render on screen
+    this.loadJsonData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Relax'),
+         elevation: 0.0,
+        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: Center(
+      body: SingleChildScrollView(
+
         child: Column(
+          
+          children:  <Widget>[
 
-          children: <Widget>[
+            Divider(height: 20, color: Colors.white,),
 
-          RaisedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                 builder: (context) => FourthPage(),
-                ),  
-              );
-            },
-            child: const Text(
-              'Ir nivel 3 de push',
-              style: TextStyle(fontSize: 20)
+             Text(
+              "Seu histórico de humor",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'RobotoMono',
+                fontSize: 20,
+              ),
             ),
-          ),
 
+            Divider(height: 40, color: Colors.white,),
+
+            ListView.separated(   
+                shrinkWrap: true,  
+                physics: NeverScrollableScrollPhysics(), 
+                itemCount: data == null ? 0 : data.length,
+                itemBuilder: (BuildContext context, int index){
+                    return new GestureDetector(
+                      onTap: (){
+                        print("clicked on card $index");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                          builder: (context) => FourthPage(data, index),
+                          ),  
+                        );
+                      },
+                      child: new Card(
+                        child: new Container(
+                          padding: EdgeInsets.all(10),
+                            child: new Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              
+                              children: <Widget>[
+                                CircleAvatar(child: Text(data[index]['intDiaSemana']),),
+
+                                Text(data[index]['diaSemana'] + "     " + data[index]['humor']),
+
+                                Icon(Icons.keyboard_arrow_right),
+                              ],
+                            )
+                        )
+                      )
+                    );
+                }, 
+                separatorBuilder: (BuildContext context, int index) { 
+                    return Divider(color: Colors.white,);
+                },
+            ),
           ],
-
-
-
         )
-      ),
-
-
-     
+      )
     );
   }
 }

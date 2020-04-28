@@ -1,48 +1,70 @@
 
 import 'package:flutter/material.dart';
 
+class FourthPage extends StatelessWidget {
 
-class FourthPage extends StatefulWidget {
-  FourthPage({Key key, this.title}) : super(key: key);
+  final List dias;
+  final int index;
 
-  final String title;
-
-  @override
-  _FourthPageState createState() => _FourthPageState();
-}
-
-class _FourthPageState extends State<FourthPage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
-
+  FourthPage(List this.dias, this.index);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Relax'),
+        elevation: 0.0,
+        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Center(
         child: Column(
 
           children: <Widget>[
 
-            Text("OLAR")
+           Text(
+            dias[index]["diaSemana"] + " , " + dias[index]["intDiaSemana"],
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontFamily: 'RobotoMono',
+              fontSize: 35,
+            ),
+          ),
+
+          Divider(height: 20, color: Colors.white),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+
+            Container(
+              padding: EdgeInsets.all(10),
+              child:  Text(dias[index]["humor"]),
+            ),
+            
+            OutlineButton(
+
+              child: new Text("Editar Texto"),
+              onPressed: null,
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0))
+            )
+            ],
+          ),
+
+          Divider(height: 20, color: Colors.white),
+
+          Container(
+            width: 320,
+            height: 250,
+            color: Colors.amber,
+          ),
+
+          OutlineButton(
+
+              child: new Text("Salvar Texto"),
+              onPressed: null,
+              shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(15.0))
+            )
+              
           
           ],
         )

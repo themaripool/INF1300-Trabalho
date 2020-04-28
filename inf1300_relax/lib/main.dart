@@ -43,15 +43,20 @@ Widget _introScreen() {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
-            Colors.blue,
-            Colors.blueAccent,
+            Colors.white,
+            Colors.white24,
           ],
         ),
         navigateAfterSeconds: MainPage(),
         loaderColor: Colors.transparent,
       ),
       Container(
-        child: Text("SPLASH BEM BONITA AQUI!")
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/logo.png"),
+            fit: BoxFit.scaleDown,
+          ),
+        ),
       ),
     ],
   );
