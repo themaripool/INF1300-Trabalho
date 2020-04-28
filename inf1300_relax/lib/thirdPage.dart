@@ -1,5 +1,7 @@
 
 import 'dart:convert';
+import 'package:inf1300_relax/diasMarcados.dart';
+
 import 'fourthPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,6 +38,11 @@ class _ThirdPageState extends State<ThirdPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final items = List<String>.generate(20, (i) => "${i + 1}");
+
+   
+
     return Scaffold(
       appBar: AppBar(
          elevation: 0.0,
@@ -66,7 +73,43 @@ class _ThirdPageState extends State<ThirdPage> {
                 physics: NeverScrollableScrollPhysics(), 
                 itemCount: data == null ? 0 : data.length,
                 itemBuilder: (BuildContext context, int index){
-                    return new GestureDetector(
+                  final item = items[index];
+                  return Dismissible(
+                    key: Key(data[index]["id"]),
+
+                    onDismissed: (left) {
+                      // Remove the item from the data source.
+                        setState(() {
+                          print(item);
+                          print(data);
+                          data = List.from(data);
+                          print(data[index]);
+                          data.removeAt(index);
+                          print("Depois do dismiss");
+                          print(data);
+                        }
+                      );
+
+                      // Then show a snackbar.
+                      // Scaffold.of(context)
+                      //   .showSnackBar(SnackBar(content: Text("$item dismissed")));
+                    },
+                    // Show a red background as the item is swiped away.
+                    background: Container(
+                      color: Colors.red,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 270),
+                        child: Icon(Icons.delete,
+                            color: Colors.white,
+                            
+                        ),
+                      ),
+                    ),
+
+
+
+
+                    child: new GestureDetector(
                       onTap: (){
                         print("clicked on card $index");
                         Navigator.push(
@@ -92,7 +135,8 @@ class _ThirdPageState extends State<ThirdPage> {
                             )
                         )
                       )
-                    );
+                    )
+                  );
                 }, 
                 separatorBuilder: (BuildContext context, int index) { 
                     return Divider(color: Colors.white,);
