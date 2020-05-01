@@ -139,6 +139,7 @@ class _MainPageState extends State<MainPage> {
 
             // Row com cards clicaveis para grafico e historico
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
 
                 // Botao da ir para grafico
@@ -156,6 +157,7 @@ class _MainPageState extends State<MainPage> {
                       Container(
                         width: 150,
                         height: 90,
+                        
                         decoration: new BoxDecoration(
                           color: Color.fromRGBO(248, 248, 255, 1),
                           borderRadius: new BorderRadius.all(Radius.circular(10))
@@ -204,6 +206,7 @@ class _MainPageState extends State<MainPage> {
                       Container(
                         width: 150,
                         height: 90,
+                        
                         decoration: new BoxDecoration(
                           color: Color.fromRGBO(248, 248, 255, 1),
                           borderRadius: new BorderRadius.all(Radius.circular(10))
