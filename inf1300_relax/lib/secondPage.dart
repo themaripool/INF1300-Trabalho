@@ -40,7 +40,7 @@ class _SecongPageState extends State<SecongPage> {
 
           children: <Widget>[
 
-            Divider(),
+            Divider(color: Colors.transparent),
 
             Container(
 
@@ -60,7 +60,7 @@ class _SecongPageState extends State<SecongPage> {
               ),
             ),
 
-            Divider(),
+            Divider(color: Colors.transparent),
 
             RaisedButton(
               onPressed: () {

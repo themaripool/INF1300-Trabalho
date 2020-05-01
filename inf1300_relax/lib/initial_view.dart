@@ -45,8 +45,6 @@ class _MainPageState extends State<MainPage> {
 
     DateTime date = new DateTime.now();
 
-
-
     return Scaffold(
       // appBar: AppBar(
       //   title: const Text('Relax')
@@ -85,39 +83,56 @@ class _MainPageState extends State<MainPage> {
                   child: Column(
                     children: <Widget>[
 
+                      //Título
                       Container(
-                        margin: EdgeInsets.only(top: 8),
-                        color: Colors.blueGrey,
-                        width: 250,
-                        height: 50,
-
-
+                        margin: EdgeInsets.only(top: 20),
+                        width: 300,
+                        height: 25,
+                        child: Text("Como você está se sentindo hoje?",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontFamily: 'OpenSans', fontStyle: FontStyle.italic,fontSize: 15),
+                        ),
                       ),
 
+                      Container(
+                        margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+                        width: 300,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(255, 255, 255, 0.6),
+                          borderRadius: new BorderRadius.all(Radius.circular(10))
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
 
+                            Container(
+                              child: Text('😔'),
+                            ),
 
+                            Container(
+                              child: Text('😶'),
+                            ),
 
+                            Container(
+                              child: Text('😑'),
+                            ),
 
+                            Container(
+                              child: Text('🙂'),
+                            ),
+
+                            Container(
+                              child: Text('😁')
+                            )
+
+                          ],
+                        ),
+                      ),
 
                     ],
                   ),
               )
-            ),
-
-            // Botão temporário para ir pro grafico
-            RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                  builder: (context) => SecongPage(),
-                  ),  
-                );
-              },
-              child: const Text(
-                'Ir nivel 1 de push',
-                style: TextStyle(fontSize: 20)
-              ),
             ),
 
             Divider(color: Colors.white,),
@@ -164,7 +179,7 @@ class _MainPageState extends State<MainPage> {
                             Expanded(child:
                               AutoSizeText(
                                 'Gráfico de humor',
-                                style: TextStyle(fontFamily: 'RobotoMono', fontSize: 15),
+                                style: TextStyle(fontFamily: 'OpenSans',fontStyle: FontStyle.italic, fontSize: 15),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -212,7 +227,7 @@ class _MainPageState extends State<MainPage> {
                             Expanded(child:
                               AutoSizeText(
                                 'Histórico de humor',
-                                style: TextStyle(fontFamily: 'RobotoMono', fontSize: 15),
+                                style: TextStyle(fontFamily: 'OpenSans',fontStyle: FontStyle.italic, fontSize: 15),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),

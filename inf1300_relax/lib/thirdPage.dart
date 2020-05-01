@@ -55,7 +55,7 @@ class _ThirdPageState extends State<ThirdPage> {
           
           children:  <Widget>[
 
-            Divider(height: 20, color: Colors.white,),
+            Divider(height: 8, color: Colors.transparent,),
 
              Text(
               "Seu histórico de humor",
@@ -66,7 +66,7 @@ class _ThirdPageState extends State<ThirdPage> {
               ),
             ),
 
-            Divider(height: 40, color: Colors.white,),
+            Divider(height: 20, color: Colors.transparent,),
 
             ListView.separated(   
                 shrinkWrap: true,  
