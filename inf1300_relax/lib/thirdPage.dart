@@ -110,9 +110,6 @@ class _ThirdPageState extends State<ThirdPage> {
                       ),
                     ),
 
-
-
-
                     child: new GestureDetector(
                       onTap: (){
                         print("clicked on card $index");
@@ -128,9 +125,12 @@ class _ThirdPageState extends State<ThirdPage> {
                           padding: EdgeInsets.all(10),
                             child: new Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              
                               children: <Widget>[
-                                CircleAvatar(child: Text(data[index]['intDiaSemana']),),
+
+                                CircleAvatar(
+                                  backgroundColor: Color.fromRGBO(248, 248, 255, 1), 
+                                  child: Text(data[index]['intDiaSemana'], style: TextStyle(color: Colors.black),),
+                                ),
 
                                 Text(data[index]['diaSemana'] + "     " + data[index]['humor']),
 

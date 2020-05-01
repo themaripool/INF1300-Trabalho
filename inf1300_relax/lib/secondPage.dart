@@ -40,42 +40,87 @@ class _SecongPageState extends State<SecongPage> {
 
           children: <Widget>[
 
+            Divider(height:10 ,color: Colors.transparent),
+
+            Text(
+              "Gráfico da semana",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontStyle: FontStyle.italic,
+                fontSize: 20,
+              ),
+            ),
+
             Divider(color: Colors.transparent),
 
             Container(
-
+              margin: EdgeInsets.only(left: 10, right: 10),
               width: 300,
               height: 250,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(248, 248, 255, 1),
+                borderRadius: new BorderRadius.all(Radius.circular(10))
+              ),
+              child: Container(
+                margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                child: LineChart(
+                  lines: [
+                    new Line<List<String>, String, String>( // max de 7 porque se repitir dia da semana buga
+                      data: myData,
+                      xFn: (datum) => datum[0],
+                      yFn: (datum) => datum[1],
+                    ),
+                  ],
+                ),
+              )
+            ),
 
-              child:
-              LineChart(
-                
-                lines: [
-                  new Line<List<String>, String, String>( // max de 7 porque se repitir dia da semana buga
-                    data: myData,
-                    xFn: (datum) => datum[0],
-                    yFn: (datum) => datum[1],
-                  ),
-                ],
+            Divider(height: 10, color: Colors.transparent),
+
+            Text(
+              "Estatísticas da semana",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontStyle: FontStyle.italic,
+                fontSize: 18,
+              ),
+            ),
+
+            Divider(height: 10, color: Colors.transparent),
+
+            Text(
+              '😔 -------------- 28,57%',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 15,
               ),
             ),
 
             Divider(color: Colors.transparent),
 
-            RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                  builder: (context) => ThirdPage (),
-                  ),  
-                );
-              },
-              child: const Text(
-                'Ir para histórico de humor',
-                style: TextStyle(fontSize: 20)
+            Text(
+              '😑 -------------- 28,57%',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 15,
               ),
             ),
+
+            Divider(color: Colors.transparent),
+
+            Text(
+              '😁 -------------- 42,86%',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 15,
+              ),
+            ),
+
           ],
         )
       ),    

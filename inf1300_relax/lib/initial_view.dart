@@ -55,7 +55,7 @@ class _MainPageState extends State<MainPage> {
 
             // Card com o título, contendo dia e dia da semana
             Container(
-              margin: EdgeInsets.only(top: 35, left: 8),
+              margin: EdgeInsets.only(top: 40, left: 8),
               width: 300,
               height: 50,
               child: 
@@ -72,12 +72,12 @@ class _MainPageState extends State<MainPage> {
             // Card com o medidor de humor do dia
             Card(
               shadowColor: Colors.black,
-              color: Color.fromRGBO(240, 248, 255, 1),
+              color: Color.fromRGBO(248, 248, 255, 1),
               child:Container(
                   width: 300,
                   height: 150,
                   decoration: new BoxDecoration(
-                    color: Color.fromRGBO(240, 248, 255, 1),
+                    color: Color.fromRGBO(248, 248, 255, 1),
                     borderRadius: new BorderRadius.all(Radius.circular(10))
                   ),
                   child: Column(
@@ -151,13 +151,13 @@ class _MainPageState extends State<MainPage> {
                   
                   child: Card(
                     shadowColor: Colors.black,
-                    color: Color.fromRGBO(240, 248, 255, 1),
+                    color: Color.fromRGBO(248, 248, 255, 1),
                     child:
                       Container(
                         width: 150,
                         height: 90,
                         decoration: new BoxDecoration(
-                          color: Color.fromRGBO(240, 248, 255, 1),
+                          color: Color.fromRGBO(248, 248, 255, 1),
                           borderRadius: new BorderRadius.all(Radius.circular(10))
                         ),
                         child: Row(
