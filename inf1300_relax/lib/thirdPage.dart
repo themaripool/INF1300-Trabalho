@@ -20,13 +20,16 @@ class ThirdPage extends StatefulWidget {
 class _ThirdPageState extends State<ThirdPage> {
 
   List data;
+  List entradas_diario;
 
   Future<String> loadJsonData() async {
     
     var jsonText = await rootBundle.loadString('assets/diasMarcados.json');
+    var jsonTextDiario = await rootBundle.loadString('assets/diario.json');
 
     setState(() {
       data = json.decode(jsonText);
+      entradas_diario = json.decode(jsonTextDiario);
     });
     
   }
@@ -61,7 +64,8 @@ class _ThirdPageState extends State<ThirdPage> {
               "Seu histórico de humor",
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontFamily: 'RobotoMono',
+                fontFamily: 'OpenSans',
+                fontStyle: FontStyle.italic,
                 fontSize: 20,
               ),
             ),
@@ -115,7 +119,7 @@ class _ThirdPageState extends State<ThirdPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                          builder: (context) => FourthPage(data, index),
+                          builder: (context) => FourthPage(data, index, entradas_diario),
                           ),  
                         );
                       },
