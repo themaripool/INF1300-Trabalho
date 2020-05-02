@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'secondPage.dart';
 import 'thirdPage.dart';
+import 'imagesPage.dart';
 
 
 
@@ -71,7 +72,7 @@ class _MainPageState extends State<MainPage> {
 
             // Card com o medidor de humor do dia
             Card(
-              shadowColor: Colors.black,
+              //shadowColor: Colors.black,
               color: Color.fromRGBO(248, 248, 255, 1),
               child:Container(
                   width: 300,
@@ -151,7 +152,7 @@ class _MainPageState extends State<MainPage> {
                   },
                   
                   child: Card(
-                    shadowColor: Colors.black,
+                    //shadowColor: Colors.black,
                     color: Color.fromRGBO(248, 248, 255, 1),
                     child:
                       Container(
@@ -200,7 +201,7 @@ class _MainPageState extends State<MainPage> {
                   },
                   
                   child: Card(
-                    shadowColor: Colors.black,
+                    //shadowColor: Colors.black,
                     color: Color.fromRGBO(248, 248, 255, 1),
                     child:
                       Container(
@@ -239,11 +240,69 @@ class _MainPageState extends State<MainPage> {
                         ),
                       ),
                   )
-                )
+                ),
+                
 
               ],
+
+              
+            ),
+            
+            //SECOND ROW
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:<Widget>[
+                  GestureDetector(
+
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => ImagesPage(),));
+                    },
+                    
+                    child: Card(
+                      //shadowColor: Colors.black,
+                      color: Color.fromRGBO(248, 248, 255, 1),
+                      child:
+                        Container(
+                          width: 150,
+                          height: 90,
+                          
+                          decoration: new BoxDecoration(
+                            color: Color.fromRGBO(248, 248, 255, 1),
+                            borderRadius: new BorderRadius.all(Radius.circular(10))
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+
+                              Container(
+                                width: 5,
+                                color: Colors.transparent,
+                              ),
+
+                              Image.asset("assets/iconeHistorico.png", width: 40,height: 40,fit: BoxFit.fill,),
+
+                              Container(
+                                width: 5,
+                                color: Colors.transparent,
+                              ),
+
+                              Expanded(child:
+                                AutoSizeText(
+                                  'Galeria de Imagems',
+                                  style: TextStyle(fontFamily: 'OpenSans',fontStyle: FontStyle.italic, fontSize: 15),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ) 
+                            ],
+                          ),
+                        ),
+                    )
+                  )
+                ]
+
             )
-           
+            
            
           ],
 
