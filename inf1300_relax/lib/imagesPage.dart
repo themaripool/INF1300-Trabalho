@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'bigImage.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'cat.dart';
@@ -24,6 +27,7 @@ class ImagesPage extends StatefulWidget {
 
 class _ImagesPageState extends State<ImagesPage> {
   int _selectedIndex = 0;
+  Future<List<Cat>> _future;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -41,12 +45,20 @@ class _ImagesPageState extends State<ImagesPage> {
     ),
   ];
 
-  Future<List<Cat>> search(http.Client client, limit) async {
+  Future<List<Cat>> searchCat(http.Client client, limit) async {
     final response = await http.get(
         "$catImageAPIURL?limit=$limit&api_key=$catApiKey");
     final body = json.decode(response.body);
 
     return (body as List).map((cat) => Cat.fromJSON(cat)).toList();
+  }
+
+
+
+  void initState(){
+    _future = searchCat(new http.Client(), 20);
+    
+    super.initState();
   }
   
 
@@ -55,9 +67,19 @@ class _ImagesPageState extends State<ImagesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Relax'),
+        actions:<Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed:(){
+              setState((){_future = searchCat(new http.Client(), 20);});
+              
+            }
+          )
+          
+        ] 
       ),
       body: new FutureBuilder<List<Cat>>(
-        future: search(new http.Client(), 20),
+        future: _future,
         builder: (context, snapshot){
           if(snapshot.hasError) print(snapshot.error);
 
@@ -84,7 +106,22 @@ class CatList extends StatelessWidget {
       gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       itemBuilder: (context, index) {
         return new GridTile(
-          child: Image.network(cats[index].url)
+          child: GestureDetector(
+            onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                 builder: (context) => BigImage(image: cats[index].url),
+                ),  
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.all(3),
+              child: new Image.network(
+                cats[index].url, 
+                fit:BoxFit.fitWidth)
+              )
+          )
         );
         
       },
