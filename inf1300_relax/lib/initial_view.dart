@@ -73,12 +73,13 @@ class _MainPageState extends State<MainPage> {
             // Card com o medidor de humor do dia
             Card(
               //shadowColor: Colors.black,
+              
               color: Color.fromRGBO(248, 248, 255, 1),
               child:Container(
                   width: 300,
                   height: 150,
                   decoration: new BoxDecoration(
-                    color: Color.fromRGBO(248, 248, 255, 1),
+                    color: Theme.of(context).accentColor,//Color.fromRGBO(248, 248, 255, 1),
                     borderRadius: new BorderRadius.all(Radius.circular(10))
                   ),
                   child: Column(
