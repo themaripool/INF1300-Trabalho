@@ -134,6 +134,8 @@ class _ThirdPageState extends State<ThirdPage> {
 
                                 Text(data[index]['diaSemana'] + "     " + data[index]['humor']),
 
+                                Image.asset("assets/iconeDiario.png", width: 20,height: 20,fit: BoxFit.fill,),
+
                                 Icon(Icons.keyboard_arrow_right),
                               ],
                             )
