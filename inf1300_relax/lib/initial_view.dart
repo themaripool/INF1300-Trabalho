@@ -176,7 +176,7 @@ class _MainPageState extends State<MainPage> {
                             Image.asset("assets/iconeGrafico.png",width: 40,height: 40,fit: BoxFit.fill,),
 
                             Container(
-                              width: 5,
+                              width: 10,
                               color: Colors.transparent,
                             ),
 
@@ -225,7 +225,7 @@ class _MainPageState extends State<MainPage> {
                             Image.asset("assets/iconeHistorico.png", width: 40,height: 40,fit: BoxFit.fill,),
 
                             Container(
-                              width: 5,
+                              width: 10,
                               color: Colors.transparent,
                             ),
 
@@ -280,16 +280,16 @@ class _MainPageState extends State<MainPage> {
                                 color: Colors.transparent,
                               ),
 
-                              Image.asset("assets/iconeHistorico.png", width: 40,height: 40,fit: BoxFit.fill,),
+                              Image.asset("assets/iconeGaleria.png", width: 40,height: 40,fit: BoxFit.fill,),
 
                               Container(
-                                width: 5,
+                                width: 10,
                                 color: Colors.transparent,
                               ),
 
                               Expanded(child:
                                 AutoSizeText(
-                                  'Galeria de Imagems',
+                                  'Galeria de Imagens',
                                   style: TextStyle(fontFamily: 'OpenSans',fontStyle: FontStyle.italic, fontSize: 15),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -311,25 +311,27 @@ class _MainPageState extends State<MainPage> {
       ),
 
 
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Business'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text('School'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       title: Text('Home'),
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.business),
+      //       title: Text('Business'),
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.school),
+      //       title: Text('School'),
+      //     ),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   selectedItemColor: Colors.amber[800],
+      //   onTap: _onItemTapped,
+      // ),
+
+
     );
   }
 }

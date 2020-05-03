@@ -66,7 +66,10 @@ class _ImagesPageState extends State<ImagesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Relax'),
+        title: const Text('Galeria de imagens'),
+        elevation: 0.0,
+        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        iconTheme: IconThemeData(color: Colors.black),
         actions:<Widget>[
           IconButton(
             icon: Icon(Icons.refresh),
