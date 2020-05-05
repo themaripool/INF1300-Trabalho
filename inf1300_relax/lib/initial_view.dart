@@ -54,14 +54,7 @@ class _MainPageState extends State<MainPage> {
             margin: EdgeInsets.only(top: 40, left: 8),
             width: 300,
             height: 50,
-            child: Text(
-              "Segunda, ${date.day}/${date.month}",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontFamily: 'OpenSans',
-                  fontStyle: FontStyle.italic,
-                  fontSize: 25),
-            ),
+            child: _buildTitleText("Segunda, ${date.day}/${date.month}", 25, TextAlign.left, FontStyle.italic)
           ),
 
           // Card com o medidor de humor do dia
@@ -83,14 +76,8 @@ class _MainPageState extends State<MainPage> {
                       margin: EdgeInsets.only(top: 20),
                       width: 300,
                       height: 25,
-                      child: Text(
-                        "Como você está se sentindo hoje?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'OpenSans',
-                            fontStyle: FontStyle.italic,
-                            fontSize: 15),
-                      ),
+                      child: _buildTitleText("Como você está se sentindo hoje?", 15, TextAlign.center, FontStyle.italic)
+                      
                     ),
 
                     Container(
@@ -130,21 +117,28 @@ class _MainPageState extends State<MainPage> {
 
           // Row com cards clicaveis para grafico e historico
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
               // Botao da ir para grafico
-              _buildCardsInRow(context, SecongPage(), 'Gráfico de humor', 'iconeGrafico'),
+              _buildCardsInRow(
+                  context, SecongPage(), 'Gráfico de humor', 'iconeGrafico'),
 
               // Botao da ir pro historico
-              _buildCardsInRow(context, ThirdPage(), 'Histórico de humor', 'iconeHistorico'),
+              _buildCardsInRow(
+                  context, ThirdPage(), 'Histórico de humor', 'iconeHistorico'),
+
+              _buildCardsInRow(
+                  context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
             ],
           ),
 
           //SECOND ROW
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          // Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
 
-            _buildCardsInRow(context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
-            
-          ])
+          //   // Botao da ir pra galeria
+          //   _buildCardsInRow(context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
+
+          // ])
         ],
       )),
 
@@ -172,12 +166,7 @@ class _MainPageState extends State<MainPage> {
 }
 
 Widget _buildCardsInRow(
-  BuildContext context,
-  Widget page,
-  String title,
-  String icone
-
-) {
+    BuildContext context, Widget page, String title, String icone) {
   return InkWell(
       onTap: () {
         Navigator.push(
@@ -190,16 +179,17 @@ Widget _buildCardsInRow(
         //shadowColor: Colors.black,
         color: Color.fromRGBO(248, 248, 255, 1),
         child: Container(
-          width: 150,
-          height: 90,
+          width: 100,
+          height: 120,
           decoration: new BoxDecoration(
               color: Color.fromRGBO(248, 248, 255, 1),
               borderRadius: new BorderRadius.all(Radius.circular(10))),
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                width: 5,
+                width: 10,
+                height: 15,
                 color: Colors.transparent,
               ),
               Image.asset(
@@ -210,15 +200,18 @@ Widget _buildCardsInRow(
               ),
               Container(
                 width: 10,
+                height: 20,
                 color: Colors.transparent,
               ),
               Expanded(
                 child: AutoSizeText(
                   '$title',
                   style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontStyle: FontStyle.italic,
-                      fontSize: 15),
+                    fontFamily: 'OpenSans',
+                    fontStyle: FontStyle.italic,
+                    fontSize: 15,
+                  ),
+                  textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -227,4 +220,11 @@ Widget _buildCardsInRow(
           ),
         ),
       ));
+}
+
+Widget _buildTitleText(String title, double size, TextAlign align, FontStyle style) {
+  return Text("$title",
+      textAlign: align,
+      style: TextStyle(
+          fontFamily: 'OpenSans', fontStyle: style, fontSize: size));
 }
