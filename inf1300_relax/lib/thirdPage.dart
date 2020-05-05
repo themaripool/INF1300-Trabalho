@@ -77,28 +77,15 @@ class _ThirdPageState extends State<ThirdPage> {
                 physics: NeverScrollableScrollPhysics(), 
                 itemCount: data == null ? 0 : data.length,
                 itemBuilder: (BuildContext context, int index){
-                  final item = items[index];
                   return Dismissible(
                     key: Key(data[index]["id"]),
-
                     onDismissed: (left) {
-                      // Remove the item from the data source.
                         setState(() {
-                          print(item);
-                          print(data);
                           data = List.from(data);
-                          print(data[index]);
                           data.removeAt(index);
-                          print("Depois do dismiss");
-                          print(data);
                         }
                       );
-
-                      // Then show a snackbar.
-                      // Scaffold.of(context)
-                      //   .showSnackBar(SnackBar(content: Text("$item dismissed")));
                     },
-                    // Show a red background as the item is swiped away.
                     background: Container(
                       color: Colors.red,
                       child: Padding(
