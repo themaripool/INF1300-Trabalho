@@ -14,29 +14,29 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
+  // int _selectedIndex = 0;
+  // static const TextStyle optionStyle =
+  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // static const List<Widget> _widgetOptions = <Widget>[
+  //   Text(
+  //     'Index 0: Home',
+  //     style: optionStyle,
+  //   ),
+  //   Text(
+  //     'Index 1: Business',
+  //     style: optionStyle,
+  //   ),
+  //   Text(
+  //     'Index 2: School',
+  //     style: optionStyle,
+  //   ),
+  // ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +73,7 @@ class _MainPageState extends State<MainPage> {
                   children: <Widget>[
                     //Título
                     Container(
-                      margin: EdgeInsets.only(top: 20),
-                      width: 300,
-                      height: 25,
-                      child: _buildTitleText("Como você está se sentindo hoje?", 15, TextAlign.center, FontStyle.italic)
-                      
+                      margin: EdgeInsets.only(top: 20), width: 300, height: 25,child: _buildTitleText("Como você está se sentindo hoje?", 15, TextAlign.center, FontStyle.italic)
                     ),
 
                     Container(
@@ -113,6 +109,13 @@ class _MainPageState extends State<MainPage> {
 
           Divider(
             color: Colors.white,
+          ),
+
+          Container(
+            margin: EdgeInsets.only(top: 20, left: 8),
+            width: 300,
+            height: 50,
+            child: _buildTitleText("Categorias", 25, TextAlign.left, FontStyle.italic)
           ),
 
           // Row com cards clicaveis para grafico e historico
@@ -165,8 +168,7 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-Widget _buildCardsInRow(
-    BuildContext context, Widget page, String title, String icone) {
+Widget _buildCardsInRow(BuildContext context, Widget page, String title, String icone) {
   return InkWell(
       onTap: () {
         Navigator.push(
