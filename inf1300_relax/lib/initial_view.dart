@@ -159,12 +159,29 @@ class _MainPageState extends State<MainPage> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.redAccent),
-              child: _buildSideMenuHeader(context),
+            UserAccountsDrawerHeader(
+              accountName: Text("Olá Mariela. Bem vinda de volta!", style: TextStyle(color: Colors.white)),
+              accountEmail: Text("abc123@hotmail.com", style: TextStyle(color: Colors.white),),
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image:new ExactAssetImage('assets/profileBackground1.jpeg'),
+                  colorFilter: ColorFilter.srgbToLinearGamma(),
+                  fit: BoxFit.cover),
+              ),
+              currentAccountPicture: new CircleAvatar(
+                backgroundColor: Colors.blueGrey,
+                child: new Text("M"),
+
+              ),
             ),
-            _buildSideMenu(context, SecongPage(), 'Meu Perfil'), //teste
-            _buildSideMenu(context, SecongPage(), 'Ajustes'),
+
+            _buildSideMenu(context, ImagesPage(), 'Perfil'),
+            new Divider(),
+            _buildSideMenu(context, ImagesPage(), 'Ajustes'),
+            new Divider(),
+            _buildSideMenu(context, ImagesPage(), 'Sair'),
+            new Divider()
+           
           ],
         ),
       ),
@@ -172,39 +189,7 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-Widget _buildSideMenuHeader(BuildContext context) {
-  return InkWell(
-     onTap: () {
-      },
-      child: Container(
-      child: Row(
-        children: [
-          CircleAvatar(
-            child: Image.asset('assets/logo2.png'),
-            radius: 45,
-          ),
-
-          Container(width: 30,),
-
-          Expanded(
-            child:  AutoSizeText(
-                  "Olá Mariela."
-                  "Bem vinda de volta!",
-                  style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontStyle: FontStyle.italic,
-                      fontSize: 15),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-          )
-        ],
-      ),
-    ),
-  );
-}
-
-Widget _buildSideMenu(BuildContext context, Widget page, String title) {
+Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
   return InkWell(
       onTap: () {
         Navigator.push(
@@ -213,42 +198,15 @@ Widget _buildSideMenu(BuildContext context, Widget page, String title) {
               builder: (context) => page,
             ));
       },
-      child: Card(
-          child: Container(
-        width: 150,
-        height: 90,
-        decoration: new BoxDecoration(
-            color: Color.fromRGBO(248, 248, 255, 1),
-            borderRadius: new BorderRadius.all(Radius.circular(10))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              width: 5,
-              color: Colors.transparent,
-            ),
-            Container(
-              width: 10,
-              color: Colors.transparent,
-            ),
-            Expanded(
-              child: AutoSizeText(
-                '$title',
-                style: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontStyle: FontStyle.italic,
-                    fontSize: 15),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+      child: ListTile(
+              title: Text("$pegeTitle"),
+              trailing:  Icon(Icons.arrow_forward),
+
             )
-          ],
-        ),
-      )));
+      );
 }
 
-Widget _buildCardsInRow(
-    BuildContext context, Widget page, String title, String icone) {
+Widget _buildCardsInRow( BuildContext context, Widget page, String title, String icone) {
   return InkWell(
       onTap: () {
         Navigator.push(
