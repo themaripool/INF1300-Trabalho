@@ -43,9 +43,11 @@ class _MainPageState extends State<MainPage> {
     DateTime date = new DateTime.now();
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Relax')
-      // ),
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
       body: Center(
           child: Column(
         children: <Widget>[
@@ -130,54 +132,123 @@ class _MainPageState extends State<MainPage> {
 
           // Row com cards clicaveis para grafico e historico
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
               // Botao da ir para grafico
-              _buildCardsInRow(context, SecongPage(), 'Gráfico de humor', 'iconeGrafico'),
+              _buildCardsInRow(
+                  context, SecongPage(), 'Gráfico de humor', 'iconeGrafico'),
 
               // Botao da ir pro historico
-              _buildCardsInRow(context, ThirdPage(), 'Histórico de humor', 'iconeHistorico'),
+              _buildCardsInRow(
+                  context, ThirdPage(), 'Histórico de humor', 'iconeHistorico'),
             ],
           ),
 
           //SECOND ROW
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-
-            _buildCardsInRow(context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
-            
+            _buildCardsInRow(
+                context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
           ])
         ],
       )),
 
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       title: Text('Home'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.business),
-      //       title: Text('Business'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.school),
-      //       title: Text('School'),
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Colors.amber[800],
-      //   onTap: _onItemTapped,
-      // ),
+      // MENU LATERAL
+
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.redAccent),
+              child: _buildSideMenuHeader(context),
+            ),
+            _buildSideMenu(context, SecongPage(), 'Meu Perfil'), //teste
+            _buildSideMenu(context, SecongPage(), 'Ajustes'),
+          ],
+        ),
+      ),
     );
   }
 }
 
-Widget _buildCardsInRow(
-  BuildContext context,
-  Widget page,
-  String title,
-  String icone
+Widget _buildSideMenuHeader(BuildContext context) {
+  return InkWell(
+     onTap: () {
+      },
+      child: Container(
+      child: Row(
+        children: [
+          CircleAvatar(
+            child: Image.asset('assets/logo2.png'),
+            radius: 45,
+          ),
 
-) {
+          Container(width: 30,),
+
+          Expanded(
+            child:  AutoSizeText(
+                  "Olá Mariela."
+                  "Bem vinda de volta!",
+                  style: TextStyle(
+                      fontFamily: 'OpenSans',
+                      fontStyle: FontStyle.italic,
+                      fontSize: 15),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildSideMenu(BuildContext context, Widget page, String title) {
+  return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => page,
+            ));
+      },
+      child: Card(
+          child: Container(
+        width: 150,
+        height: 90,
+        decoration: new BoxDecoration(
+            color: Color.fromRGBO(248, 248, 255, 1),
+            borderRadius: new BorderRadius.all(Radius.circular(10))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              width: 5,
+              color: Colors.transparent,
+            ),
+            Container(
+              width: 10,
+              color: Colors.transparent,
+            ),
+            Expanded(
+              child: AutoSizeText(
+                '$title',
+                style: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontStyle: FontStyle.italic,
+                    fontSize: 15),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )
+          ],
+        ),
+      )));
+}
+
+Widget _buildCardsInRow(
+    BuildContext context, Widget page, String title, String icone) {
   return InkWell(
       onTap: () {
         Navigator.push(
