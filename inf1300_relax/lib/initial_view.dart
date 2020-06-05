@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'secondPage.dart';
 import 'thirdPage.dart';
 import 'imagesPage.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'themeStore.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key, this.title}) : super(key: key);
@@ -13,33 +16,16 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
+ bool isOn = false;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+
+class _MainPageState extends State<MainPage> {
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+
+    ThemeStore themeStore = Provider.of<ThemeStore>(context);
+
     DateTime date = new DateTime.now();
 
     return Scaffold(
@@ -70,13 +56,12 @@ class _MainPageState extends State<MainPage> {
           Card(
               //shadowColor: Colors.black,
 
-              color: Color.fromRGBO(248, 248, 255, 1),
+              color: Colors.blue,//Color.fromRGBO(248, 248, 255, 1),
               child: Container(
                 width: 300,
                 height: 150,
                 decoration: new BoxDecoration(
-                    color: Theme.of(context)
-                        .accentColor, //Color.fromRGBO(248, 248, 255, 1),
+                    color: Colors.blue, //Theme.of(context).accentColor, 
                     borderRadius: new BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   children: <Widget>[
@@ -127,7 +112,7 @@ class _MainPageState extends State<MainPage> {
               )),
 
           Divider(
-            color: Colors.white,
+            color: Colors.transparent,
           ),
 
           // Row com cards clicaveis para grafico e historico
@@ -180,8 +165,27 @@ class _MainPageState extends State<MainPage> {
             _buildSideMenu(context, ImagesPage(), 'Ajustes'),
             new Divider(),
             _buildSideMenu(context, ImagesPage(), 'Sair'),
-            new Divider()
-           
+            new Divider(),
+
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text("Ativar dark mode"),
+                ),
+                
+                Switch(value: isOn, onChanged: (bool value){
+                  setState(() {
+                    isOn = value;
+                    themeStore.switchTheme();
+                  });},
+                  activeColor: Colors.green,
+                  activeTrackColor: Colors.lightGreenAccent,
+                )
+              ],
+            )
           ],
         ),
       ),
@@ -217,12 +221,12 @@ Widget _buildCardsInRow( BuildContext context, Widget page, String title, String
       },
       child: Card(
         //shadowColor: Colors.black,
-        color: Color.fromRGBO(248, 248, 255, 1),
+        color: Colors.blue,//Color.fromRGBO(248, 248, 255, 1),
         child: Container(
           width: 150,
           height: 90,
           decoration: new BoxDecoration(
-              color: Color.fromRGBO(248, 248, 255, 1),
+              color: Colors.blue, //Color.fromRGBO(248, 248, 255, 1),
               borderRadius: new BorderRadius.all(Radius.circular(10))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
