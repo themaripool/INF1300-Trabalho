@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'secondPage.dart';
-import 'thirdPage.dart';
 import 'imagesPage.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'themeStore.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 class DiaryPage extends StatefulWidget {
   DiaryPage({Key key, this.title}) : super(key: key);
@@ -19,6 +17,16 @@ class DiaryPage extends StatefulWidget {
 bool isOn = false;
 
 class _DiaryPageState extends State<DiaryPage> {
+
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeStore themeStore = Provider.of<ThemeStore>(context);
@@ -44,7 +52,7 @@ class _DiaryPageState extends State<DiaryPage> {
         Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: TextField(
-            
+            controller: myController,
             keyboardType: TextInputType.multiline,
             maxLines: null,
             decoration: InputDecoration(
@@ -53,16 +61,15 @@ class _DiaryPageState extends State<DiaryPage> {
             ),
           ),
         ),
-
-       
-
-
       ]),
 
       ),
 
       floatingActionButton: FloatingActionButton(   
         onPressed: () {
+
+          print(myController.text);
+          // salvar texto
           
         },
         child: Icon(Icons.save),
