@@ -6,6 +6,7 @@ import 'imagesPage.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'themeStore.dart';
 import 'package:provider/provider.dart';
+import 'diaryPage.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key, this.title}) : super(key: key);
@@ -133,6 +134,8 @@ class _MainPageState extends State<MainPage> {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             _buildCardsInRow(
                 context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
+             _buildCardsInRow(
+                context, DiaryPage(), "Escrever diário", 'iconeDiario'),
           ])
         ],
       )),
