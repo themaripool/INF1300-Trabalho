@@ -42,7 +42,7 @@ class _RespirationListPageState extends State<RespirationListPage> {
             ),
 
             Text(
-              "Conheça nossas respirações",
+              "Pratique alguma respiração",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'OpenSans',
@@ -52,9 +52,24 @@ class _RespirationListPageState extends State<RespirationListPage> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(top: 50),
+              padding: const EdgeInsets.only(top: 25),
               child: _buildCards(context, SquareRespirationPage(), 'Respiração Quadrada', 'iconeRespQuadrada'),
-            )
+            ), 
+
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: _buildCards(context, SquareRespirationPage(), 'Respiração Abdominal', 'iconeRespAbd'),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: _buildCards(context, SquareRespirationPage(), 'Respiração Alta', 'iconeRespAlta'),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: _buildCards(context, SquareRespirationPage(), 'Respiração Completa', 'iconeRespComp'),
+            ),  
 
              
 

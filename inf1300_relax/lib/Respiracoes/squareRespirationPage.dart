@@ -30,7 +30,7 @@ class _SquareRespirationPageState extends State<SquareRespirationPage> {
           child: Column(children: <Widget>[
 
             Text(
-              "Tire um momento para se acalmar",
+              "Respiração Quadrada",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'OpenSans',
@@ -44,13 +44,6 @@ class _SquareRespirationPageState extends State<SquareRespirationPage> {
               height: 450.0,
               width: 450.0,
             )
-
-
-
-
-
-
-
       ])),
     );
   }
