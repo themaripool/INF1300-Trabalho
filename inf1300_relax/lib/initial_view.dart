@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'secondPage.dart';
 import 'thirdPage.dart';
 import 'imagesPage.dart';
+import 'services/authentication.dart';
 
 class MainPage extends StatefulWidget {
-  MainPage({Key key, this.title}) : super(key: key);
+  MainPage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
 
+  final String userId;
   final String title;
+  final BaseAuth auth;
+  final VoidCallback logoutCallback;
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -37,6 +41,16 @@ class _MainPageState extends State<MainPage> {
       _selectedIndex = index;
     });
   }
+
+  signOut() async {
+    try {
+      await widget.auth.signOut();
+      widget.logoutCallback();
+    } catch (e) {
+      print(e);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -143,6 +157,10 @@ class _MainPageState extends State<MainPage> {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
 
             _buildCardsInRow(context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
+            new FlatButton(
+                child: new Text('Logout',
+                    style: new TextStyle(fontSize: 17.0, color: Colors.black)),
+                onPressed: signOut)
             
           ])
         ],
