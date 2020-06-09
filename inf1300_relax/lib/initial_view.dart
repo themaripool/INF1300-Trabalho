@@ -4,6 +4,9 @@ import 'secondPage.dart';
 import 'thirdPage.dart';
 import 'imagesPage.dart';
 import 'services/authentication.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'themeStore.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
@@ -17,30 +20,10 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
+ bool isOn = false;
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+
+class _MainPageState extends State<MainPage> {
 
   signOut() async {
     try {
@@ -53,13 +36,18 @@ class _MainPageState extends State<MainPage> {
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+
+    ThemeStore themeStore = Provider.of<ThemeStore>(context);
+
     DateTime date = new DateTime.now();
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Relax')
-      // ),
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
       body: Center(
           child: Column(
         children: <Widget>[
@@ -82,13 +70,12 @@ class _MainPageState extends State<MainPage> {
           Card(
               //shadowColor: Colors.black,
 
-              color: Color.fromRGBO(248, 248, 255, 1),
+              color: Colors.blue,//Color.fromRGBO(248, 248, 255, 1),
               child: Container(
                 width: 300,
                 height: 150,
                 decoration: new BoxDecoration(
-                    color: Theme.of(context)
-                        .accentColor, //Color.fromRGBO(248, 248, 255, 1),
+                    color: Colors.blue, //Theme.of(context).accentColor, 
                     borderRadius: new BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   children: <Widget>[
@@ -139,63 +126,105 @@ class _MainPageState extends State<MainPage> {
               )),
 
           Divider(
-            color: Colors.white,
+            color: Colors.transparent,
           ),
 
           // Row com cards clicaveis para grafico e historico
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
               // Botao da ir para grafico
-              _buildCardsInRow(context, SecongPage(), 'Gráfico de humor', 'iconeGrafico'),
+              _buildCardsInRow(
+                  context, SecongPage(), 'Gráfico de humor', 'iconeGrafico'),
 
               // Botao da ir pro historico
-              _buildCardsInRow(context, ThirdPage(), 'Histórico de humor', 'iconeHistorico'),
+              _buildCardsInRow(
+                  context, ThirdPage(), 'Histórico de humor', 'iconeHistorico'),
             ],
           ),
 
           //SECOND ROW
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-
-            _buildCardsInRow(context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
-            new FlatButton(
-                child: new Text('Logout',
-                    style: new TextStyle(fontSize: 17.0, color: Colors.black)),
-                onPressed: signOut)
-            
+            _buildCardsInRow(
+                context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
           ])
         ],
       )),
 
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       title: Text('Home'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.business),
-      //       title: Text('Business'),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.school),
-      //       title: Text('School'),
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Colors.amber[800],
-      //   onTap: _onItemTapped,
-      // ),
+      // MENU LATERAL
+
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+              accountName: Text("Olá Mariela. Bem vinda de volta!", style: TextStyle(color: Colors.white)),
+              accountEmail: Text("abc123@hotmail.com", style: TextStyle(color: Colors.white),),
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image:new ExactAssetImage('assets/profileBackground1.jpeg'),
+                  colorFilter: ColorFilter.srgbToLinearGamma(),
+                  fit: BoxFit.cover),
+              ),
+              currentAccountPicture: new CircleAvatar(
+                backgroundColor: Colors.blueGrey,
+                child: new Text("M"),
+
+              ),
+            ),
+
+            _buildSideMenu(context, ImagesPage(), 'Perfil'),
+            new Divider(),
+            _buildSideMenu(context, ImagesPage(), 'Ajustes'),
+            new Divider(),
+            _buildSideMenu(context, ImagesPage(), 'Sair'),
+            new Divider(),
+
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text("Ativar dark mode"),
+                ),
+                
+                Switch(value: isOn, onChanged: (bool value){
+                  setState(() {
+                    isOn = value;
+                    themeStore.switchTheme();
+                  });},
+                  activeColor: Colors.green,
+                  activeTrackColor: Colors.lightGreenAccent,
+                )
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
 
-Widget _buildCardsInRow(
-  BuildContext context,
-  Widget page,
-  String title,
-  String icone
+Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
+  return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => page,
+            ));
+      },
+      child: ListTile(
+              title: Text("$pegeTitle"),
+              trailing:  Icon(Icons.arrow_forward),
 
-) {
+            )
+      );
+}
+
+Widget _buildCardsInRow( BuildContext context, Widget page, String title, String icone) {
   return InkWell(
       onTap: () {
         Navigator.push(
@@ -206,12 +235,12 @@ Widget _buildCardsInRow(
       },
       child: Card(
         //shadowColor: Colors.black,
-        color: Color.fromRGBO(248, 248, 255, 1),
+        color: Colors.blue,//Color.fromRGBO(248, 248, 255, 1),
         child: Container(
           width: 150,
           height: 90,
           decoration: new BoxDecoration(
-              color: Color.fromRGBO(248, 248, 255, 1),
+              color: Colors.blue, //Color.fromRGBO(248, 248, 255, 1),
               borderRadius: new BorderRadius.all(Radius.circular(10))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

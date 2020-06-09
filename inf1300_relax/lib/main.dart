@@ -6,8 +6,19 @@ import 'login_page.dart';
 import 'services/authentication.dart';
 
 
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'themeStore.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+// void main() => runApp(MyApp());
+
+void main() {
+  runApp(
+    Provider(
+      create: (BuildContext context) => ThemeStore(),
+      child: MyApp(),
+    ));
+}
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -18,12 +29,16 @@ enum AuthStatus {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Splash Screen',
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-      ),
-      home: MyHomePage(title: 'Splash Screen Flutter', auth: new Auth()),
+
+    ThemeStore themeStore = Provider.of<ThemeStore>(context);
+
+    return Observer(
+      name: 'theme_store_observer',
+      builder: (BuildContext context) => MaterialApp(
+      title: 'Flutter Demo',
+      theme: themeStore.themeStore,
+      home: MyHomePage(title: 'Flutter Demo Home Page', auth: new Auth()),
+    )
     );
   }
 }
