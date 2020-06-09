@@ -1,15 +1,43 @@
+
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:async';
+import 'package:flutter/services.dart';
 
-class SquareRespirationPage extends StatefulWidget {
-  SquareRespirationPage({Key key, this.title}) : super(key: key);
 
-  final String title;
+
+class RespirationPage extends StatefulWidget {
+  // RespirationPage({Key key, this.title, this.i}) : super(key: key);
+
+  final int index;
+
+
+  RespirationPage(this.index);
 
   @override
-  _SquareRespirationPageState createState() => _SquareRespirationPageState();
+  _RespirationPageState createState() => _RespirationPageState();
 }
 
-class _SquareRespirationPageState extends State<SquareRespirationPage> {
+class _RespirationPageState extends State<RespirationPage> {
+
+  List respiracoes;
+ 
+  Future<String> loadJsonData() async {
+    
+    var jsonText = await rootBundle.loadString('assets/repirationPage.json');
+
+    setState(() {
+      respiracoes = json.decode(jsonText);
+    });
+
+  }
+
+  
+  @override
+  void initState() { // called before this render on screen
+    this.loadJsonData();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -29,8 +57,7 @@ class _SquareRespirationPageState extends State<SquareRespirationPage> {
       body: Center(
           child: Column(children: <Widget>[
 
-            Text(
-              "Respiração Quadrada",
+            Text(respiracoes[widget.index]["title"],
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'OpenSans',

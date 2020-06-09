@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'squareRespirationPage.dart';
+import 'respirationPage.dart';
 
 class RespirationListPage extends StatefulWidget {
   RespirationListPage({Key key, this.title}) : super(key: key);
@@ -53,30 +53,23 @@ class _RespirationListPageState extends State<RespirationListPage> {
 
             Padding(
               padding: const EdgeInsets.only(top: 25),
-              child: _buildCards(context, SquareRespirationPage(), 'Respiração Quadrada', 'iconeRespQuadrada'),
+              child: _buildCards(context, RespirationPage(0), 'Respiração Quadrada', 'iconeRespQuadrada'),
             ), 
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, SquareRespirationPage(), 'Respiração Abdominal', 'iconeRespAbd'),
+              child: _buildCards(context, RespirationPage(1), 'Respiração Abdominal', 'iconeRespAbd'),
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, SquareRespirationPage(), 'Respiração Alta', 'iconeRespAlta'),
+              child: _buildCards(context, RespirationPage(2), 'Respiração Alta', 'iconeRespAlta'),
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, SquareRespirationPage(), 'Respiração Completa', 'iconeRespComp'),
+              child: _buildCards(context, RespirationPage(3), 'Respiração Completa', 'iconeRespComp'),
             ),  
-
-             
-
-            
-
-            
-
       ])),
     );
   }
