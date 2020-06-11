@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'secondPage.dart';
@@ -178,7 +180,7 @@ class _MainPageState extends State<MainPage> {
             new Divider(),
             _buildSideMenu(context, ImagesPage(), 'Ajustes'),
             new Divider(),
-            _buildSideMenu(context, ImagesPage(), 'Sair'),
+            _logoutSideMenu(context, signOut, 'Sair'),
             new Divider(),
 
             new Row(
@@ -216,6 +218,17 @@ Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
               builder: (context) => page,
             ));
       },
+      child: ListTile(
+              title: Text("$pegeTitle"),
+              trailing:  Icon(Icons.arrow_forward),
+
+            )
+      );
+}
+
+Widget _logoutSideMenu(BuildContext context, Function signout, String pegeTitle) {
+  return InkWell(
+      onTap: () => signout(),
       child: ListTile(
               title: Text("$pegeTitle"),
               trailing:  Icon(Icons.arrow_forward),
