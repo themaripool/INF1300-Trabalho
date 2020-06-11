@@ -1,6 +1,8 @@
 import 'dart:ffi';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'secondPage.dart';
 import 'thirdPage.dart';
@@ -27,6 +29,14 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
+  String _username;
+  String _useremail;
+  
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+
   signOut() async {
     try {
       await widget.auth.signOut();
@@ -34,6 +44,20 @@ class _MainPageState extends State<MainPage> {
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    widget.auth.getCurrentUser().then((user){
+      setState((){
+        _username = user.displayName;
+        _useremail = user.email;
+      });
+
+    });
+    
+
   }
 
 
@@ -161,8 +185,8 @@ class _MainPageState extends State<MainPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text("Olá Mariela. Bem vinda de volta!", style: TextStyle(color: Colors.white)),
-              accountEmail: Text("abc123@hotmail.com", style: TextStyle(color: Colors.white),),
+              accountName: Text("Olá $_username. Bem vindo(a) de volta!", style: TextStyle(color: Colors.white)),
+              accountEmail: Text("$_useremail", style: TextStyle(color: Colors.white),),
               decoration: new BoxDecoration(
                 image: new DecorationImage(
                   image:new ExactAssetImage('assets/profileBackground1.jpeg'),

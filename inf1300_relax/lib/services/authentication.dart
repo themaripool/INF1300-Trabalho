@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class BaseAuth {
   Future<String> signIn(String email, String password);
 
-  Future<String> signUp(String email, String password);
+  Future<String> signUp(String email, String password, String username);
 
   Future<FirebaseUser> getCurrentUser();
 
@@ -24,11 +24,13 @@ class Auth implements BaseAuth {
     FirebaseUser user = result.user;
     return user.uid;
   }
-
-  Future<String> signUp(String email, String password) async {
+  Future<String> signUp(String email, String password, String username) async {
     AuthResult result = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
     FirebaseUser user = result.user;
+    UserUpdateInfo userUpdateInfo = new UserUpdateInfo();
+    userUpdateInfo.displayName = username;
+    user.updateProfile(userUpdateInfo);
     return user.uid;
   }
 
