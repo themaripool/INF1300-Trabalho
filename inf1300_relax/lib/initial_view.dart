@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'secondPage.dart';
 import 'thirdPage.dart';
 import 'imagesPage.dart';
+import 'services/authentication.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'themeStore.dart';
 import 'package:provider/provider.dart';
@@ -10,9 +11,12 @@ import 'diaryPage.dart';
 import 'Respiracoes/respirationList.dart';
 
 class MainPage extends StatefulWidget {
-  MainPage({Key key, this.title}) : super(key: key);
+  MainPage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
 
+  final String userId;
   final String title;
+  final BaseAuth auth;
+  final VoidCallback logoutCallback;
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -22,6 +26,16 @@ class MainPage extends StatefulWidget {
 
 
 class _MainPageState extends State<MainPage> {
+
+  signOut() async {
+    try {
+      await widget.auth.signOut();
+      widget.logoutCallback();
+    } catch (e) {
+      print(e);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context){
