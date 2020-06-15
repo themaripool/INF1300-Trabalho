@@ -12,6 +12,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'themeStore.dart';
 import 'package:provider/provider.dart';
 import 'diaryPage.dart';
+import 'Respiracoes/respirationList.dart';
+import 'colors/customColors.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
@@ -72,7 +74,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.0),
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Center(
@@ -80,7 +82,7 @@ class _MainPageState extends State<MainPage> {
         children: <Widget>[
           // Card com o título, contendo dia e dia da semana
           Container(
-            margin: EdgeInsets.only(top: 40, left: 8),
+            margin: EdgeInsets.only(top: 10, left: 8),
             width: 300,
             height: 50,
             child: Text(
@@ -97,12 +99,12 @@ class _MainPageState extends State<MainPage> {
           Card(
               //shadowColor: Colors.black,
 
-              color: Colors.blue,//Color.fromRGBO(248, 248, 255, 1),
+              color: MyColors.grey,//Color.fromRGBO(248, 248, 255, 1),
               child: Container(
                 width: 300,
                 height: 150,
                 decoration: new BoxDecoration(
-                    color: Colors.blue, //Theme.of(context).accentColor, 
+                    color: MyColors.grey, //Theme.of(context).accentColor, 
                     borderRadius: new BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   children: <Widget>[
@@ -117,7 +119,8 @@ class _MainPageState extends State<MainPage> {
                         style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontStyle: FontStyle.italic,
-                            fontSize: 15),
+                            fontSize: 15, 
+                            color: MyColors.purple),
                       ),
                     ),
 
@@ -126,7 +129,7 @@ class _MainPageState extends State<MainPage> {
                       width: 300,
                       height: 70,
                       decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 255, 255, 0.6),
+                          color: MyColors.white,
                           borderRadius:
                               new BorderRadius.all(Radius.circular(10))),
                       child: Row(
@@ -176,7 +179,8 @@ class _MainPageState extends State<MainPage> {
                 context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
              _buildCardsInRow(
                 context, DiaryPage(), "Escrever diário", 'iconeDiario'),
-          ])
+          ]),
+
         ],
       )),
 
@@ -208,6 +212,8 @@ class _MainPageState extends State<MainPage> {
             _buildSideMenu(context, ImagesPage(), 'Ajustes'),
             new Divider(),
             _logoutSideMenu(context, signOut, 'Sair'),
+            new Divider(),
+            _buildSideMenu(context, RespirationListPage(), 'Respiration Page'),
             new Divider(),
 
             new Row(
@@ -275,12 +281,12 @@ Widget _buildCardsInRow( BuildContext context, Widget page, String title, String
       },
       child: Card(
         //shadowColor: Colors.black,
-        color: Colors.blue,//Color.fromRGBO(248, 248, 255, 1),
+        color: MyColors.babyBlue,//Color.fromRGBO(248, 248, 255, 1),
         child: Container(
           width: 150,
           height: 90,
           decoration: new BoxDecoration(
-              color: Colors.blue, //Color.fromRGBO(248, 248, 255, 1),
+              color: MyColors.babyBlue, //Color.fromRGBO(248, 248, 255, 1),
               borderRadius: new BorderRadius.all(Radius.circular(10))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
