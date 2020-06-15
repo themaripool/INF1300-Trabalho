@@ -1,96 +1,61 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'camera.dart';
 import 'configurationPage.dart';
 import 'initial_view.dart';
 
-class ProfilePage extends StatefulWidget {
-  ProfilePage({Key key, this.title}) : super(key: key);
+var result;
+class ProfilePage extends StatelessWidget {
 
-  final String title;
+  final File imageFile;
+  
+  ProfilePage(this.imageFile);
 
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
- 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  Widget _decideImageView(){
+    if (result == null){
+      return Text("Nenhuma imagem selecionada");
+    }  
+    return Container(
+     height: 200.0,
+     width: 200.0,
+     decoration: new BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(image: Image.file(File(result)).image, fit: BoxFit.cover),
+      ),);
   }
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = new DateTime.now();
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.0),
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Center(
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _decideImageView(),
 
-        child: Text("Profile Page"),
-
-      ),
-       
-
-      // MENU LATERAL
-
-      drawer: Drawer(
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text("Olá Mariela. Bem vinda de volta!", style: TextStyle(color: Colors.white)),
-              accountEmail: Text("abc123@hotmail.com", style: TextStyle(color: Colors.white),),
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image:new ExactAssetImage('assets/profileBackground1.jpeg'),
-                  colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.9), BlendMode.dstATop),
-                  fit: BoxFit.cover),
-              ),
-              currentAccountPicture: new CircleAvatar(
-                backgroundColor: Colors.blueGrey,
-                child: new Text("M"),
-
-              ),
+          new GestureDetector(
+              onTap: () {
+                _navigateAndDisplaySelection(context);
+              },
+              child: new Card(
+                child: Text("Take profile picture"),
+              )
             ),
+        ],
+      )),
+    );
+  }
 
-            _buildSideMenu(context, MainPage(), 'Home'),
-            new Divider(),
-            _buildSideMenu(context, ProfilePage(), 'Perfil'),
-            new Divider(),
-            _buildSideMenu(context, ConfigurationPage(), 'Ajustes'),
-            new Divider()
-           
-           
-          ],
-        ),
-      ),
+  _navigateAndDisplaySelection(BuildContext context) async {
+    result = await Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) =>  CameraPage()),
     );
   }
 }
-
-Widget _buildSideMenu(BuildContext context, Widget page, String pageTitle) {
-  return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => page,
-            ));
-      },
-      child: ListTile(
-              title: Text("$pageTitle"),
-              trailing:  Icon(Icons.arrow_forward),
-
-            )
-      );
-}
-

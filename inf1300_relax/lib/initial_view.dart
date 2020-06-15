@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'diaryPage.dart';
 import 'Respiracoes/respirationList.dart';
 import 'colors/customColors.dart';
+import 'profilePage.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
@@ -207,7 +208,7 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
 
-            _buildSideMenu(context, ImagesPage(), 'Perfil'),
+            _buildSideMenu(context, ProfilePage(null), 'Perfil'),
             new Divider(),
             _buildSideMenu(context, ImagesPage(), 'Ajustes'),
             new Divider(),
