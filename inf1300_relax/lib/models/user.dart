@@ -1,21 +1,19 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'dias.dart';
 
 class User {
   String key;
-  String name;
-  String userId;
+  List<Dias> dias;
 
-  User(this.name, this.userId);
+  User();
 
   User.fromSnapshot(DataSnapshot snapshot) :
     key = snapshot.key,
-    userId = snapshot.value["userId"],
-    name = snapshot.value["name"];
+    dias = snapshot.value["dias"];
 
   toJson() {
     return {
-      "userId": userId,
-      "name": name,
+      "dias": dias,
     };
   }
 }

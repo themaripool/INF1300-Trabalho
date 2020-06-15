@@ -165,7 +165,7 @@ class _MainPageState extends State<MainPage> {
 
               // Botao da ir pro historico
               _buildCardsInRow(
-                  context, ThirdPage(), 'Histórico de humor', 'iconeHistorico'),
+                  context, ThirdPage(userId:widget.userId), 'Histórico de humor', 'iconeHistorico'),
             ],
           ),
 
