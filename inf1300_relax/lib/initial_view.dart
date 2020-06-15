@@ -1,4 +1,8 @@
+import 'dart:ffi';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'secondPage.dart';
 import 'thirdPage.dart';
@@ -25,6 +29,14 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
+  String _username;
+  String _useremail;
+  
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+
   signOut() async {
     try {
       await widget.auth.signOut();
@@ -32,6 +44,20 @@ class _MainPageState extends State<MainPage> {
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    widget.auth.getCurrentUser().then((user){
+      setState((){
+        _username = user.displayName;
+        _useremail = user.email;
+      });
+
+    });
+    
+
   }
 
 
@@ -139,7 +165,7 @@ class _MainPageState extends State<MainPage> {
 
               // Botao da ir pro historico
               _buildCardsInRow(
-                  context, ThirdPage(), 'Histórico de humor', 'iconeHistorico'),
+                  context, ThirdPage(userId:widget.userId), 'Histórico de humor', 'iconeHistorico'),
             ],
           ),
 
@@ -159,8 +185,8 @@ class _MainPageState extends State<MainPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text("Olá Mariela. Bem vinda de volta!", style: TextStyle(color: Colors.white)),
-              accountEmail: Text("abc123@hotmail.com", style: TextStyle(color: Colors.white),),
+              accountName: Text("Olá $_username. Bem vindo(a) de volta!", style: TextStyle(color: Colors.white)),
+              accountEmail: Text("$_useremail", style: TextStyle(color: Colors.white),),
               decoration: new BoxDecoration(
                 image: new DecorationImage(
                   image:new ExactAssetImage('assets/profileBackground1.jpeg'),
@@ -178,7 +204,7 @@ class _MainPageState extends State<MainPage> {
             new Divider(),
             _buildSideMenu(context, ImagesPage(), 'Ajustes'),
             new Divider(),
-            _buildSideMenu(context, ImagesPage(), 'Sair'),
+            _logoutSideMenu(context, signOut, 'Sair'),
             new Divider(),
 
             new Row(
@@ -216,6 +242,17 @@ Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
               builder: (context) => page,
             ));
       },
+      child: ListTile(
+              title: Text("$pegeTitle"),
+              trailing:  Icon(Icons.arrow_forward),
+
+            )
+      );
+}
+
+Widget _logoutSideMenu(BuildContext context, Function signout, String pegeTitle) {
+  return InkWell(
+      onTap: () => signout(),
       child: ListTile(
               title: Text("$pegeTitle"),
               trailing:  Icon(Icons.arrow_forward),
