@@ -73,11 +73,7 @@ class _CameraPageState extends State<CameraPage> {
     if (imageFile != null){
       return RaisedButton(
         onPressed: (){
-          Navigator.push(context,
-            MaterialPageRoute(
-              builder: (context) => ProfilePage(imageFile),
-            ),
-          );
+          Navigator.pop(context, imageFile.uri.path);
         }, 
         child: Text("Salvar imagem"),
       );
@@ -115,9 +111,7 @@ class _CameraPageState extends State<CameraPage> {
                 _showChoiceDialog(context);
               }, 
               child: Text("Selecionar imagem"),),
-
             _saveProfileImage()
-
           ],
         )
       ),

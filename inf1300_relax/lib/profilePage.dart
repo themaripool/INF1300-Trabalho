@@ -5,18 +5,24 @@ import 'camera.dart';
 import 'configurationPage.dart';
 import 'initial_view.dart';
 
-
+var result;
 class ProfilePage extends StatelessWidget {
 
   final File imageFile;
-
+  
   ProfilePage(this.imageFile);
 
- Widget _decideImageView(){
-    if (imageFile == null){
+  Widget _decideImageView(){
+    if (result == null){
       return Text("Nenhuma imagem selecionada");
     }  
-    return Image.file(imageFile, width: 300, height:300,);
+    return Container(
+     height: 200.0,
+     width: 200.0,
+     decoration: new BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(image: Image.file(File(result)).image, fit: BoxFit.cover),
+      ),);
   }
 
   @override
@@ -31,24 +37,25 @@ class ProfilePage extends StatelessWidget {
         child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          
           _decideImageView(),
 
           new GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CameraPage(),
-                  ),
-                );
+                _navigateAndDisplaySelection(context);
               },
               child: new Card(
                 child: Text("Take profile picture"),
               )
-            )
+            ),
         ],
       )),
+    );
+  }
+
+  _navigateAndDisplaySelection(BuildContext context) async {
+    result = await Navigator.push(
+      context,
+      new MaterialPageRoute(builder: (context) =>  CameraPage()),
     );
   }
 }
