@@ -37,7 +37,78 @@ class _ThirdPageState extends State<ThirdPage> {
   StreamSubscription<Event> _onDiaAddedSubscription;
   StreamSubscription<Event> _onDiaChangedSubscription;
 
+  escolheDiaSemana(int dia){
+    String ret;
+    switch(dia){
+      case 0:{
+        ret = "Domingo";
+      }
+      break;
+      
+      case 1:{
+        ret = "Segunda";
+      }
+      break;
+
+      case 2:{
+        ret = "Terça";
+      }
+      break;
+
+      case 3:{
+        ret = "Quarta";
+      }
+      break;
+
+      case 4:{
+        ret = "Quinta";
+      }
+      break;
+
+      case 5:{
+        ret = "Sexta";
+      }
+      break;
+
+      case 6:{
+        ret = "Sábado";
+      }
+      break;
+    }
+    return ret;
+  }
   
+  escolheHumor(int humor){
+    String ret;
+    switch(humor){     
+      case 1:{
+        ret = "😔";
+      }
+      break;
+
+      case 2:{
+        ret = "😶";
+      }
+      break;
+
+      case 3:{
+        ret = "😑";
+      }
+      break;
+
+      case 4:{
+        ret = "🙂";
+      }
+      break;
+
+      case 5:{
+        ret = "😁";
+      }
+      break;
+      
+    }
+    return ret;
+  }
   addNewUser(){
     User user = new User();
     print(widget.userId);
@@ -133,7 +204,12 @@ class _ThirdPageState extends State<ThirdPage> {
               icon: Icon(Icons.wifi),
               onPressed: () {
                 addNewUser();
-                addNewDia("aaaaaaaaaaaa", 7);
+                addNewDia("aaaaaaaaaaaa", 3);
+                addNewDia("bbbbbbbbbbb", 2);
+                addNewDia("cccccccccc", 1);
+                addNewDia("ddddddddddddd", 4);
+                addNewDia("eeeeeeeeeeeee", 5);
+                addNewDia("fffffffffffffff", 3);
               }),
         ]
       ),
@@ -201,7 +277,7 @@ class _ThirdPageState extends State<ThirdPage> {
                                   child: Text( DateTime.parse(_diaList[index].dia).day.toString() , style: TextStyle(color: Colors.black),),
                                 ),
 
-                                Text(DateTime.parse(_diaList[index].dia).weekday.toString() + "     " + _diaList[index].humor.toString()),
+                                Text( escolheDiaSemana(DateTime.parse(_diaList[index].dia).weekday) + "     " + escolheHumor(_diaList[index].humor)),
 
                                 Image.asset("assets/iconeDiario.png", width: 20,height: 20,fit: BoxFit.fill,),
 
@@ -226,7 +302,6 @@ class _ThirdPageState extends State<ThirdPage> {
   @override
   Widget build(BuildContext context) {
 
-    final items = List<String>.generate(20, (i) => "${i + 1}");
     return showDiaList();
 
    
