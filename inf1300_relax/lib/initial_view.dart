@@ -179,7 +179,7 @@ class _MainPageState extends State<MainPage> {
             _buildCardsInRow(
                 context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
              _buildCardsInRow(
-                context, DiaryPage(), "Escrever diário", 'iconeDiario'),
+                context, DiaryPage(userId:widget.userId), "Escrever diário", 'iconeDiario'),
           ]),
 
         ],

@@ -1,15 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'models/dias.dart';
 
 class FourthPage extends StatelessWidget {
 
-  final List dias;
-  final int index;
-  final List diario;
+final Dias dia;
   
 
-  FourthPage(List this.dias, this.index, List this.diario);
+  FourthPage(Dias this.dia);
+  
+  escolheDiaSemana(int dia){
+    String ret;
+    switch(dia){
+      case 0:{
+        ret = "Domingo";
+      }
+      break;
+      
+      case 1:{
+        ret = "Segunda";
+      }
+      break;
 
+      case 2:{
+        ret = "Terça";
+      }
+      break;
+
+      case 3:{
+        ret = "Quarta";
+      }
+      break;
+
+      case 4:{
+        ret = "Quinta";
+      }
+      break;
+
+      case 5:{
+        ret = "Sexta";
+      }
+      break;
+
+      case 6:{
+        ret = "Sábado";
+      }
+      break;
+    }
+    return ret;
+  }
+
+  escolheHumor(int humor){
+    String ret;
+    switch(humor){  
+      case 0:{
+        ret = "N/A";
+      } 
+      break;  
+      case 1:{
+        ret = "😔";
+      }
+      break;
+
+      case 2:{
+        ret = "😶";
+      }
+      break;
+
+      case 3:{
+        ret = "😑";
+      }
+      break;
+
+      case 4:{
+        ret = "🙂";
+      }
+      break;
+
+      case 5:{
+        ret = "😁";
+      }
+      break;
+      
+    }
+    return ret;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +99,7 @@ class FourthPage extends StatelessWidget {
           children: <Widget>[
 
            Text(
-            dias[index]["diaSemana"] + " , " + dias[index]["intDiaSemana"],
+            escolheDiaSemana(DateTime.parse(dia.dia).weekday) + " , " + DateTime.parse(dia.dia).day.toString(),
             textAlign: TextAlign.left,
             style: TextStyle(
               fontFamily: 'OpenSans',
@@ -43,7 +118,7 @@ class FourthPage extends StatelessWidget {
 
                 Container(
                   padding: EdgeInsets.all(10),
-                  child:  Text(dias[index]["humor"]),
+                  child:  Text(escolheHumor(dia.humor)),
                 ),
               
                 OutlineButton(
@@ -74,7 +149,7 @@ class FourthPage extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(left: 15, right: 15, top: 15),
               child: SingleChildScrollView(
-                child: Text(diario[index]["texto"]),
+                child: Text(dia.diario),
               ),
             )
           ),
