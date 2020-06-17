@@ -112,6 +112,7 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
         Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: TextField(
+            enabled: ((_diaList.isEmpty) || (_diaList[0].humor != 0 && _diaList[0].diario.isEmpty)) ? true : false,
             controller: myController,
             keyboardType: TextInputType.multiline,
             maxLines: null,
@@ -139,6 +140,7 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
           }
           else{
             //JÁ FOI ADICIONADO DIÁRIO NESSE DIA
+            _showAlertDialog("Opa!", "Você já escreveu no diário hoje", context);
           }
             
            
@@ -153,3 +155,24 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
   }
 }
 
+void _showAlertDialog(String title, String message, BuildContext context) {
+   showDialog(
+     context: context,
+     builder: (BuildContext context) {
+       // return object of type Dialog
+       return AlertDialog(
+         title: new Text(title),
+         content:
+             new Text(message),
+         actions: <Widget>[
+           new FlatButton(
+             child: new Text("ok"),
+             onPressed: () {
+               Navigator.of(context).pop();
+             },
+           ),
+         ],
+       );
+     },
+   );
+ }
