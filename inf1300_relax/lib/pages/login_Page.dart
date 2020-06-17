@@ -49,6 +49,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           userId = await widget.auth.signUp(_email, _password, _username);
           //widget.auth.sendEmailVerification();
           //_showVerifyEmailSentDialog();
+          _showAlertDialog("Cadastro realizado com sucesso :)", "Por favor, faça seu login!");
           print('Signed up user: $userId');
         }
         setState(() {
@@ -135,6 +136,29 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 //      },
 //    );
 //  }
+
+ void _showAlertDialog(String title, String message) {
+   showDialog(
+     context: context,
+     builder: (BuildContext context) {
+       // return object of type Dialog
+       return AlertDialog(
+         title: new Text(title),
+         content:
+             new Text(message),
+         actions: <Widget>[
+           new FlatButton(
+             child: new Text("ok"),
+             onPressed: () {
+               toggleFormMode();
+               Navigator.of(context).pop();
+             },
+           ),
+         ],
+       );
+     },
+   );
+ }
 
   Widget _showForm() {
     return new Container(
