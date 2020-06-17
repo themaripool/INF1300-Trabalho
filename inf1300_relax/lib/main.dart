@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
-import 'initial_view.dart';
-import 'login_page.dart';
+import 'pages/mainPage.dart';
+import 'pages/login_page.dart';
 import 'services/authentication.dart';
 
 

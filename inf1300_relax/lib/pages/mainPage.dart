@@ -1,19 +1,16 @@
-import 'dart:ffi';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'secondPage.dart';
-import 'thirdPage.dart';
+import 'graficoPage.dart';
+import 'dayListPage.dart';
 import 'imagesPage.dart';
-import 'services/authentication.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'themeStore.dart';
+import '../services/authentication.dart';
+import '../themeStore.dart';
 import 'package:provider/provider.dart';
-import 'diaryPage.dart';
-import 'Respiracoes/respirationList.dart';
-import 'colors/customColors.dart';
+import 'addDiaryPage.dart';
+import '../pages/breathingList.dart';
+import '../colors/customColors.dart';
 import 'profilePage.dart';
 
 class MainPage extends StatefulWidget {
@@ -37,7 +34,6 @@ class _MainPageState extends State<MainPage> {
   String _useremail;
   
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final FirebaseDatabase _database = FirebaseDatabase.instance;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
 
@@ -166,11 +162,11 @@ class _MainPageState extends State<MainPage> {
             children: <Widget>[
               // Botao da ir para grafico
               _buildCardsInRow(
-                  context, SecongPage(), 'Gráfico de humor', 'iconeGrafico'),
+                  context, GraficoPage(), 'Gráfico de humor', 'iconeGrafico'),
 
               // Botao da ir pro historico
               _buildCardsInRow(
-                  context, ThirdPage(userId:widget.userId), 'Histórico de humor', 'iconeHistorico'),
+                  context, DayListPage(userId:widget.userId), 'Histórico de humor', 'iconeHistorico'),
             ],
           ),
 
@@ -179,7 +175,7 @@ class _MainPageState extends State<MainPage> {
             _buildCardsInRow(
                 context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
              _buildCardsInRow(
-                context, DiaryPage(userId:widget.userId), "Escrever diário", 'iconeDiario'),
+                context, AddDiaryPage(userId:widget.userId), "Escrever diário", 'iconeDiario'),
           ]),
 
         ],
@@ -214,7 +210,7 @@ class _MainPageState extends State<MainPage> {
             new Divider(),
             _logoutSideMenu(context, signOut, 'Sair'),
             new Divider(),
-            _buildSideMenu(context, RespirationListPage(), 'Respiration Page'),
+            _buildSideMenu(context, BreathingListPage(), 'Breathing Page'),
             new Divider(),
 
             new Row(

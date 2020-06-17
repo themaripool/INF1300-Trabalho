@@ -6,25 +6,25 @@ import 'package:flutter/services.dart';
 
 
 
-class RespirationPage extends StatefulWidget {
-  // RespirationPage({Key key, this.title, this.i}) : super(key: key);
+class BreathingPage extends StatefulWidget {
+  // BreathingPage({Key key, this.title, this.i}) : super(key: key);
 
   final int index;
 
 
-  RespirationPage(this.index);
+  BreathingPage(this.index);
 
   @override
-  _RespirationPageState createState() => _RespirationPageState();
+  _BreathingPageState createState() => _BreathingPageState();
 }
 
-class _RespirationPageState extends State<RespirationPage> {
+class _BreathingPageState extends State<BreathingPage> {
 
   List respiracoes;
  
   Future<String> loadJsonData() async {
     
-    var jsonText = await rootBundle.loadString('assets/repirationPage.json');
+    var jsonText = await rootBundle.loadString('assets/breathingPage.json');
 
     setState(() {
       respiracoes = json.decode(jsonText);
@@ -67,7 +67,7 @@ class _RespirationPageState extends State<RespirationPage> {
             ),
 
             Image.asset(
-              "assets/squareRespiration.gif",
+              "assets/squareBreathing.gif",
               height: 450.0,
               width: 450.0,
             )

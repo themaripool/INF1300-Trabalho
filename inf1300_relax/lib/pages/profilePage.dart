@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'camera.dart';
-import 'configurationPage.dart';
-import 'initial_view.dart';
+import 'cameraPage.dart';
 
 var result;
 class ProfilePage extends StatelessWidget {

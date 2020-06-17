@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'dart:convert';
 
 
 
 
-class BigImage extends StatefulWidget {
-  BigImage({Key key, this.title, @required this.image}) : super(key: key);
+class BigImagePage extends StatefulWidget {
+  BigImagePage({Key key, this.title, @required this.image}) : super(key: key);
 
   final String title;
   final String image;
 
   @override
-  _BigImageState createState() => _BigImageState();
+  _BigImagePageState createState() => _BigImagePageState();
 
 
 }
 
-class _BigImageState extends State<BigImage> {
+class _BigImagePageState extends State<BigImagePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);

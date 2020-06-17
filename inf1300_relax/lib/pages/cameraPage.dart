@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:inf1300_relax/profilePage.dart';
+
 
 class CameraPage extends StatefulWidget {
   CameraPage({Key key, this.title}) : super(key: key);

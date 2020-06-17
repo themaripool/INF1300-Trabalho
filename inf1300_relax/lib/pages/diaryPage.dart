@@ -1,90 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'models/dias.dart';
+import '../models/dias.dart';
+import '../utility/utility.dart';
 
-class FourthPage extends StatelessWidget {
+class DiaryPage extends StatelessWidget {
 
-final Dias dia;
+  DiaryPage(this.dia);
+  final Dias dia;
   
+  final Utility _utility = new Utility();
 
-  FourthPage(Dias this.dia);
-  
-  escolheDiaSemana(int dia){
-    String ret;
-    switch(dia){
-      case 0:{
-        ret = "Domingo";
-      }
-      break;
-      
-      case 1:{
-        ret = "Segunda";
-      }
-      break;
-
-      case 2:{
-        ret = "Terça";
-      }
-      break;
-
-      case 3:{
-        ret = "Quarta";
-      }
-      break;
-
-      case 4:{
-        ret = "Quinta";
-      }
-      break;
-
-      case 5:{
-        ret = "Sexta";
-      }
-      break;
-
-      case 6:{
-        ret = "Sábado";
-      }
-      break;
-    }
-    return ret;
-  }
-
-  escolheHumor(int humor){
-    String ret;
-    switch(humor){  
-      case 0:{
-        ret = "N/A";
-      } 
-      break;  
-      case 1:{
-        ret = "😔";
-      }
-      break;
-
-      case 2:{
-        ret = "😶";
-      }
-      break;
-
-      case 3:{
-        ret = "😑";
-      }
-      break;
-
-      case 4:{
-        ret = "🙂";
-      }
-      break;
-
-      case 5:{
-        ret = "😁";
-      }
-      break;
-      
-    }
-    return ret;
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +23,7 @@ final Dias dia;
           children: <Widget>[
 
            Text(
-            escolheDiaSemana(DateTime.parse(dia.dia).weekday) + " , " + DateTime.parse(dia.dia).day.toString(),
+            _utility.escolheDiaSemana(DateTime.parse(dia.dia).weekday) + " , " + DateTime.parse(dia.dia).day.toString(),
             textAlign: TextAlign.left,
             style: TextStyle(
               fontFamily: 'OpenSans',
@@ -118,7 +42,7 @@ final Dias dia;
 
                 Container(
                   padding: EdgeInsets.all(10),
-                  child:  Text(escolheHumor(dia.humor)),
+                  child:  Text(_utility.escolheHumor(dia.humor)),
                 ),
               
                 OutlineButton(

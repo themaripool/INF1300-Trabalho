@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:inf1300_relax/services/authentication.dart';
-import 'models/dias.dart';
+import '../models/dias.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
 
 
 
 
-class DiaryPage extends StatefulWidget {
-  DiaryPage({Key key, this.title, this.auth, this.userId}) : super(key: key);
+class AddDiaryPage extends StatefulWidget {
+  AddDiaryPage({Key key, this.title, this.auth, this.userId}) : super(key: key);
 
   final String title;
   final BaseAuth auth;
   final String userId;
 
   @override
-  _DiaryPageState createState() => _DiaryPageState();
+  _AddDiaryPageState createState() => _AddDiaryPageState();
 
   
 
 }
 
-class _DiaryPageState extends State<DiaryPage> {
+class _AddDiaryPageState extends State<AddDiaryPage> {
 
   final myController = TextEditingController();
 
   
   List<Dias> _diaList;
   Query _diaQuery;
-  bool _diaJaAdicionado;
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
     

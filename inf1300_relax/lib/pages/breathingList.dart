@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'respirationPage.dart';
+import 'BreathingPage.dart';
 
-class RespirationListPage extends StatefulWidget {
-  RespirationListPage({Key key, this.title}) : super(key: key);
+class BreathingListPage extends StatefulWidget {
+  BreathingListPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _RespirationListPageState createState() => _RespirationListPageState();
+  _BreathingListPageState createState() => _BreathingListPageState();
 }
 
-class _RespirationListPageState extends State<RespirationListPage> {
+class _BreathingListPageState extends State<BreathingListPage> {
   @override
   Widget build(BuildContext context) {
 
@@ -53,22 +53,22 @@ class _RespirationListPageState extends State<RespirationListPage> {
 
             Padding(
               padding: const EdgeInsets.only(top: 25),
-              child: _buildCards(context, RespirationPage(0), 'Respiração Quadrada', 'iconeRespQuadrada'),
+              child: _buildCards(context, BreathingPage(0), 'Respiração Quadrada', 'iconeRespQuadrada'),
             ), 
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, RespirationPage(1), 'Respiração Abdominal', 'iconeRespAbd'),
+              child: _buildCards(context, BreathingPage(1), 'Respiração Abdominal', 'iconeRespAbd'),
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, RespirationPage(2), 'Respiração Alta', 'iconeRespAlta'),
+              child: _buildCards(context, BreathingPage(2), 'Respiração Alta', 'iconeRespAlta'),
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, RespirationPage(3), 'Respiração Completa', 'iconeRespComp'),
+              child: _buildCards(context, BreathingPage(3), 'Respiração Completa', 'iconeRespComp'),
             ),  
       ])),
     );

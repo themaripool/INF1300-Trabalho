@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'profilePage.dart';
-import 'initial_view.dart';
 
 class ConfigurationPage extends StatefulWidget {
   ConfigurationPage({Key key, this.title}) : super(key: key);

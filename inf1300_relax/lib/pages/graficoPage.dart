@@ -1,20 +1,19 @@
 
 import 'package:flutter/material.dart';
-import 'thirdPage.dart';
 import 'package:fcharts/fcharts.dart';
 
 
 
-class SecongPage extends StatefulWidget {
-  SecongPage({Key key, this.title}) : super(key: key);
+class GraficoPage extends StatefulWidget {
+  GraficoPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _SecongPageState createState() => _SecongPageState();
+  _GraficoPageState createState() => _GraficoPageState();
 }
 
-class _SecongPageState extends State<SecongPage> {
+class _GraficoPageState extends State<GraficoPage> {
 
   static const myData = [
     ["Seg", "😁"],

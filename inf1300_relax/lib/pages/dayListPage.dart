@@ -1,114 +1,40 @@
 
 import 'package:inf1300_relax/services/authentication.dart';
 
-import 'fourthPage.dart';
+import 'diaryPage.dart';
 import 'package:flutter/material.dart';
-
+import '../utility/utility.dart';
 import 'dart:async';
-import 'models/dias.dart';
+import '../models/dias.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'models/user.dart';
+import '../models/user.dart';
 
 
 
-class ThirdPage extends StatefulWidget {
-  ThirdPage({Key key, this.title, this.auth, this.userId}) : super(key: key);
+class DayListPage extends StatefulWidget {
+  DayListPage({Key key, this.title, this.auth, this.userId}) : super(key: key);
 
   final String title;
   final String userId;
   final BaseAuth auth;
 
   @override
-  _ThirdPageState createState() => _ThirdPageState();
+  _DayListPageState createState() => _DayListPageState();
 }
 
-class _ThirdPageState extends State<ThirdPage> {
+class _DayListPageState extends State<DayListPage> {
 
   
   List<Dias> _diaList;
   Query _diaQuery;
+
+  Utility _utility = new Utility();
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
     
   StreamSubscription<Event> _onDiaAddedSubscription;
   StreamSubscription<Event> _onDiaChangedSubscription;
 
-  escolheDiaSemana(int dia){
-    String ret;
-    switch(dia){
-      case 0:{
-        ret = "Domingo";
-      }
-      break;
-      
-      case 1:{
-        ret = "Segunda";
-      }
-      break;
-
-      case 2:{
-        ret = "Terça";
-      }
-      break;
-
-      case 3:{
-        ret = "Quarta";
-      }
-      break;
-
-      case 4:{
-        ret = "Quinta";
-      }
-      break;
-
-      case 5:{
-        ret = "Sexta";
-      }
-      break;
-
-      case 6:{
-        ret = "Sábado";
-      }
-      break;
-    }
-    return ret;
-  }
-  
-  escolheHumor(int humor){
-    String ret;
-    switch(humor){ 
-      case 0:{
-        ret = "N/A";
-      } 
-      break;    
-      case 1:{
-        ret = "😔";
-      }
-      break;
-
-      case 2:{
-        ret = "😶";
-      }
-      break;
-
-      case 3:{
-        ret = "😑";
-      }
-      break;
-
-      case 4:{
-        ret = "🙂";
-      }
-      break;
-
-      case 5:{
-        ret = "😁";
-      }
-      break;
-      
-    }
-    return ret;
-  }
   addNewUser(){
     User user = new User();
     print(widget.userId);
@@ -225,7 +151,7 @@ class _ThirdPageState extends State<ThirdPage> {
                           context,
                           //Mexer depois AAAAAAAAAAAAAAAAAAAAA
                           MaterialPageRoute(
-                          builder: (context) => FourthPage(_diaList[index]),
+                          builder: (context) => DiaryPage(_diaList[index]),
                           ),  
                         );
                       },
@@ -241,7 +167,7 @@ class _ThirdPageState extends State<ThirdPage> {
                                   child: Text( DateTime.parse(_diaList[index].dia).day.toString() , style: TextStyle(color: Colors.black),),
                                 ),
 
-                                Text( escolheDiaSemana(DateTime.parse(_diaList[index].dia).weekday) + "     " + escolheHumor(_diaList[index].humor)),
+                                Text( _utility.escolheDiaSemana(DateTime.parse(_diaList[index].dia).weekday) + "     " + _utility.escolheHumor(_diaList[index].humor)),
 
                                 Image.asset("assets/iconeDiario.png", width: 20,height: 20,fit: BoxFit.fill,),
 

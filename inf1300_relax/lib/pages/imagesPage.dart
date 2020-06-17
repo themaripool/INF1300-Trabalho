@@ -1,11 +1,10 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'bigImage.dart';
+import 'bigImagePage.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'models/cat.dart';
+import '../models/cat.dart';
 
 const String catApiKey = 'c940fd95-7b8b-4a62-843f-13829f56f776';
 
@@ -114,7 +113,7 @@ class CatList extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                 builder: (context) => BigImage(image: cats[index].url),
+                 builder: (context) => BigImagePage(image: cats[index].url),
                 ),  
               );
             },
