@@ -1,11 +1,9 @@
 
-import 'dart:convert';
-import 'package:inf1300_relax/diasMarcados.dart';
 import 'package:inf1300_relax/services/authentication.dart';
 
 import 'fourthPage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'dart:async';
 import 'models/dias.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -26,8 +24,6 @@ class ThirdPage extends StatefulWidget {
 
 class _ThirdPageState extends State<ThirdPage> {
 
-  List data;
-  List entradas_diario;
   
   List<Dias> _diaList;
   Query _diaQuery;
@@ -80,7 +76,11 @@ class _ThirdPageState extends State<ThirdPage> {
   
   escolheHumor(int humor){
     String ret;
-    switch(humor){     
+    switch(humor){ 
+      case 0:{
+        ret = "N/A";
+      } 
+      break;    
       case 1:{
         ret = "😔";
       }
@@ -146,8 +146,6 @@ class _ThirdPageState extends State<ThirdPage> {
   onEntryAdded(Event event) {
     setState(() {
       _diaList.add(Dias.fromSnapshot(event.snapshot));
-      print(_diaList.length);
-      print(_diaList[0].toString());
     });
   
   
@@ -172,26 +170,6 @@ class _ThirdPageState extends State<ThirdPage> {
     _onDiaChangedSubscription = _diaQuery.onChildChanged.listen(onEntryChanged);
 
   }
-  // showDiaList(){
-  //       return new Container(
-  //         child: ListView.builder(
-  //         shrinkWrap: true,
-  //         itemCount: _diaList.length,
-  //         itemBuilder: (context, index) {
-  //           String diaId = _diaList[index].key;
-  //           String diario = _diaList[index].diario;
-  //           int humor = _diaList[index].humor;
-  //           String dia = _diaList[index].dia;
-  //           return new ListTile(
-  //             leading: Text(diaId),
-  //             title: Text(diario),
-  //             subtitle: Text(dia),              
-  //           );
-            
-  //         },
-  //       )
-  //       );
-  //   }
 
   showDiaList(){
     return Scaffold(
@@ -261,7 +239,7 @@ class _ThirdPageState extends State<ThirdPage> {
                           context,
                           //Mexer depois AAAAAAAAAAAAAAAAAAAAA
                           MaterialPageRoute(
-                          builder: (context) => FourthPage(data, index, entradas_diario),
+                          builder: (context) => FourthPage(_diaList[index]),
                           ),  
                         );
                       },
@@ -308,23 +286,6 @@ class _ThirdPageState extends State<ThirdPage> {
 
     
 
-    //IMPORTANTE NÃO DELETAR
-    // return Scaffold(
-    //   appBar: AppBar(
-    //      elevation: 0.0,
-    //     backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
-    //     iconTheme: IconThemeData(color: Colors.black),
-    //     actions: <Widget>[
-    //       IconButton(
-    //           icon: Icon(Icons.wifi),
-    //           onPressed: () {
-    //             addNewUser();
-    //             addNewDia("bbbbbbbbbbbbbb", 2);
-    //           }),
-    //     ]
-    //   ),
-    //   body: showDiaList()
-    // );
 
 
 }
