@@ -176,20 +176,6 @@ class _ThirdPageState extends State<ThirdPage> {
       appBar: AppBar(
          elevation: 0.0,
         backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
-        iconTheme: IconThemeData(color: Colors.black),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.wifi),
-              onPressed: () {
-                addNewUser();
-                addNewDia("aaaaaaaaaaaa", 3);
-                addNewDia("bbbbbbbbbbb", 2);
-                addNewDia("cccccccccc", 1);
-                addNewDia("ddddddddddddd", 4);
-                addNewDia("eeeeeeeeeeeee", 5);
-                addNewDia("fffffffffffffff", 3);
-              }),
-        ]
       ),
       body: SingleChildScrollView(
 
