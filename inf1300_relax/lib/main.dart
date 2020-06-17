@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
-import 'pages/mainPage.dart';
+import 'pages/homePage.dart';
 import 'pages/login_page.dart';
 import 'services/authentication.dart';
 
@@ -110,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null) {
-          return new MainPage(
+          return new HomePage(
             userId: _userId,
             auth: widget.auth,
             logoutCallback: logoutCallback,
@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Colors.white24,
             ],
           ),
-          navigateAfterSeconds: MainPage(),
+          navigateAfterSeconds: HomePage(),
           loaderColor: Colors.transparent,
         ),
         Container(

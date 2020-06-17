@@ -84,6 +84,12 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
       }
     }
 
+  updateDia(Dias dia) {
+    if (dia != null) {
+      _database.reference().child("users").child(this.widget.userId).child(dia.key).set(dia.toJson());
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -123,15 +129,24 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
         onPressed: () {
           
           if(_diaList.isEmpty){
-            print(myController.text);
+            //print(myController.text);
             addNewDia(myController.text, 0);
+            // salvar texto
+          }
+          else if(_diaList[0].humor != 0 && _diaList[0].diario.isEmpty){
+            _diaList[0].diario = myController.text;
+            updateDia(_diaList[0]);
+          }
+          else{
+            //JÁ FOI ADICIONADO DIÁRIO NESSE DIA
           }
             
-            // salvar texto
+           
           
         },
         child: Icon(Icons.save),
-        backgroundColor: _diaList.isEmpty ? Colors.green : Colors.grey
+        //verifica se tem entrada no dia de hoje ou se foi adicionado pelo menu de humor deixando o diário vazio.
+        backgroundColor: ((_diaList.isEmpty) || (_diaList[0].humor != 0 && _diaList[0].diario.isEmpty)) ? Colors.green : Colors.grey
       ),
      
     );

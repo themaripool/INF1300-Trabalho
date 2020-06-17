@@ -2,6 +2,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:inf1300_relax/utility/utility.dart';
 import 'graficoPage.dart';
 import 'dayListPage.dart';
 import 'imagesPage.dart';
@@ -13,8 +14,8 @@ import '../pages/breathingList.dart';
 import '../colors/customColors.dart';
 import 'profilePage.dart';
 
-class MainPage extends StatefulWidget {
-  MainPage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
 
   final String userId;
   final String title;
@@ -22,17 +23,18 @@ class MainPage extends StatefulWidget {
   final VoidCallback logoutCallback;
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
  bool isOn = false;
 
 
-class _MainPageState extends State<MainPage> {
+class _HomePageState extends State<HomePage> {
 
   String _username;
   String _useremail;
-  
+
+  Utility _utility = new Utility();  
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
@@ -83,7 +85,7 @@ class _MainPageState extends State<MainPage> {
             width: 300,
             height: 50,
             child: Text(
-              "Segunda, ${date.day}/${date.month}",
+              _utility.escolheDiaSemana(date.weekday) + ", ${date.day}/${date.month}",
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontFamily: 'OpenSans',
