@@ -206,7 +206,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            _buildSideMenu(context, ProfilePage(null), 'Perfil'),
+            _buildSideMenu(context, ProfilePage(), 'Perfil'),
             new Divider(),
             _buildSideMenu(context, ImagesPage(), 'Ajustes'),
             new Divider(),

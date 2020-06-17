@@ -72,18 +72,18 @@ class _CameraPageState extends State<CameraPage> {
   Widget _saveProfileImage(){
     if (imageFile != null){
       return RaisedButton(
+
         onPressed: (){
+          //Navigator.of(context).pop(imageFile.uri.path);
           Navigator.pop(context, imageFile.uri.path);
         }, 
         child: Text("Salvar imagem"),
       );
     } else {
-      return RaisedButton(
-        onPressed: (){
-          print("Nops");
-        }, 
-        child: Text("Salvar imagem"),
-        
+      return Container(
+        color: Colors.transparent,
+        height: 10,
+        width: 10,
       );
 
     }
