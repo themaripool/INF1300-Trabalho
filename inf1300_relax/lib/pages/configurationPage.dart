@@ -17,8 +17,8 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.0),
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.grey),
       ),
       body: Center(
 

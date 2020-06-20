@@ -18,8 +18,8 @@ class _BreathingListPageState extends State<BreathingListPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.grey),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.close),
@@ -86,12 +86,12 @@ Widget _buildCards( BuildContext context, Widget page, String title, String icon
       },
       child: Card(
         //shadowColor: Colors.black,
-        color: Colors.blue,//Color.fromRGBO(248, 248, 255, 1),
+        //color: Colors.blue,//Color.fromRGBO(248, 248, 255, 1),
         child: Container(
           width: 250,
           height: 90,
           decoration: new BoxDecoration(
-              color: Colors.blue, //Color.fromRGBO(248, 248, 255, 1),
+              //color: Colors.blue, //Color.fromRGBO(248, 248, 255, 1),
               borderRadius: new BorderRadius.all(Radius.circular(10))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,6 +105,7 @@ Widget _buildCards( BuildContext context, Widget page, String title, String icon
                 width: 40,
                 height: 40,
                 fit: BoxFit.fill,
+                color: Colors.grey,
               ),
               Container(
                 width: 10,
