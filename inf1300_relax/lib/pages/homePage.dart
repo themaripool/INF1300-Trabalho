@@ -1,17 +1,11 @@
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inf1300_relax/utility/profileImageUtil.dart';
 import 'package:inf1300_relax/utility/utility.dart';
-import 'graficoPage.dart';
-import 'dayListPage.dart';
 import 'imagesPage.dart';
 import '../services/authentication.dart';
 import '../themeStore.dart';
 import 'package:provider/provider.dart';
-import 'addDiaryPage.dart';
 import '../pages/breathingList.dart';
 import '../colors/customColors.dart';
 import 'profilePage.dart';
@@ -36,15 +30,7 @@ class _HomePageState extends State<HomePage> {
   String _username;
   String _useremail;
   var imageSalva;
-  ImageProvider<dynamic> _imagem = AssetImage('assets/profileBackground1.jpeg');
-
-  // var teste = (int index) => {
-  //   print ("Voce clicou em $index")
-  //   setState(() {
-  //     teste = (int index) => {};
-  //   })
-  // };
-  
+  var result;
 
   Utility _utility = new Utility();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -68,21 +54,10 @@ class _HomePageState extends State<HomePage> {
         _useremail = user.email;
       });
     });
-
-    ProfileImageUtil.getImageFromPreferences().then((img) {
-      setState(() {
-        _imagem = (img != null) ? Image.file(File(img)).image : AssetImage('assets/profileBackground1.jpeg');
-        imageSalva = img;
-        print("aa");
-        print("img - $img");
-        print("image salva - $imageSalva");
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    var imageSalva;
     ThemeStore themeStore = Provider.of<ThemeStore>(context);
 
     DateTime date = new DateTime.now();
@@ -90,8 +65,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.0),
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.grey),
       ),
       body: Center(
           child: Column(
@@ -113,82 +88,18 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // Card com o medidor de humor do dia
-          Card(
-              //shadowColor: Colors.black,
-
-              color: MyColors.grey, //Color.fromRGBO(248, 248, 255, 1),
-              child: Container(
-                width: 300,
-                height: 150,
-                decoration: new BoxDecoration(
-                    color: MyColors.grey, //Theme.of(context).accentColor,
-                    borderRadius: new BorderRadius.all(Radius.circular(10))),
-                child: Column(
-                  children: <Widget>[
-                    //Título
-                    Container(
-                      margin: EdgeInsets.only(top: 20),
-                      width: 300,
-                      height: 25,
-                      child: Text(
-                        "Como você está se sentindo hoje?",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'OpenSans',
-                            fontStyle: FontStyle.italic,
-                            fontSize: 15,
-                            color: MyColors.purple),
-                      ),
-                    ),
-
-                    Container(
-                      margin: EdgeInsets.only(top: 20, left: 10, right: 10),
-                      width: 300,
-                      height: 70,
-                      decoration: BoxDecoration(
-                          color: MyColors.white,
-                          borderRadius:
-                              new BorderRadius.all(Radius.circular(10))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          _buildHumor('😔', 1, context),
-                          _buildHumor('😶', 2, context),
-                          _buildHumor('😑', 3, context),
-                          _buildHumor('🙂', 4, context),
-                          _buildHumor('😁', 5, context),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )),
+          _cardHumor(context),
 
           Divider(
             color: Colors.transparent,
           ),
 
-          // Row com cards clicaveis para grafico e historico
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              // Botao da ir para grafico
-              // _buildCardsInRow(
-              //     context, GraficoPage(), 'Gráfico de humor', 'iconeGrafico'),
-
-              // // Botao da ir pro historico
-              // _buildCardsInRow(context, DayListPage(userId: widget.userId),
-              //     'Histórico de humor', 'iconeHistorico'),
-            ],
-          ),
-
-          //SECOND ROW
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-            _buildCardsInRow(
+          _buildCardsInRow(
                 context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
-             _buildCardsInRow(context, BreathingListPage(),
-                 "Respirações", 'iconeRespAbd'),
-          ]),
+
+          _buildCardsInRow(
+                context, BreathingListPage(), "Respirações", 'iconeRespAbd'),
+
         ],
       )),
 
@@ -196,33 +107,28 @@ class _HomePageState extends State<HomePage> {
 
       drawer: Drawer(
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text("Olá $_username. Bem vindo(a) de volta!",
-                  style: TextStyle(color: Colors.white)),
+                  style: TextStyle(color: Colors.black)),
               accountEmail: Text(
                 "$_useremail",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
               decoration: new BoxDecoration(
-                gradient: LinearGradient(colors: [MyColors.a, MyColors.a]),
-
-                //Colors.indigo.shade500, Colors.indigo.shade300
-                // image: new DecorationImage(
-                //   image:new ExactAssetImage('assets/profileBackground1.jpeg'),
-                //   colorFilter: ColorFilter.srgbToLinearGamma(),
-                //   fit: BoxFit.cover),
+                image: DecorationImage(image: AssetImage('assets/bgTeste2.jpg'), fit: BoxFit.fill ),
+                //gradient: LinearGradient(colors: [MyColors.a, MyColors.a]),
               ),
               currentAccountPicture: new CircleAvatar(
-                backgroundImage: _imagem
-                // (imageSalva != null)
-                //         ? Image.file(File(imageSalva)).image
-                //         : AssetImage("assets/placeholder.png")
+                backgroundColor: Colors.blueGrey,
+                child: new Text('${_username[0].toUpperCase()}'),
               ),
             ),
-            _buildSideMenu(context, ProfilePage(userId: widget.userId, username: _username), 'Perfil'),
+            _buildSideMenu(
+                context,
+                ProfilePage(userId: widget.userId, username: _username),
+                'Perfil'),
             new Divider(),
             _logoutSideMenu(context, signOut, 'Sair'),
             new Divider(),
@@ -253,6 +159,58 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+Widget _cardHumor(BuildContext context) {
+  return Card(
+      //shadowColor: Colors.black,
+      color: MyColors.grey, //Color.fromRGBO(248, 248, 255, 1),
+      child: Container(
+        width: 300,
+        height: 150,
+        decoration: new BoxDecoration(
+            color: MyColors.grey, //Theme.of(context).accentColor,
+            borderRadius: new BorderRadius.all(Radius.circular(10))),
+        child: Column(
+          children: <Widget>[
+            //Título
+            Container(
+              margin: EdgeInsets.only(top: 20),
+              width: 300,
+              height: 25,
+              child: Text(
+                "Como você está se sentindo hoje?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontStyle: FontStyle.italic,
+                    fontSize: 15,
+                    color: MyColors.purple),
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.only(top: 20, left: 10, right: 10),
+              width: 300,
+              height: 70,
+              decoration: BoxDecoration(
+                  color: MyColors.white,
+                  borderRadius: new BorderRadius.all(Radius.circular(10))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  _buildHumor('😔', 1, context),
+                  _buildHumor('😶', 2, context),
+                  _buildHumor('😑', 3, context),
+                  _buildHumor('🙂', 4, context),
+                  _buildHumor('😁', 5, context),
+                ],
+              ),
+            ),
+          ],
+        ),
+      )
+    );
+}
+
 Widget _buildHumor(String emoji, int index, BuildContext context) {
   print("Selected day func 1 $_selectedDay");
   return Container(
@@ -265,32 +223,22 @@ Widget _buildHumor(String emoji, int index, BuildContext context) {
       // onPressed: (){
       //   print("Tocou no $index");
       // }
-      onPressed: 
-          (_selectedDay == false) ? () => _selectedDayfunction(index, context) : null,
+      onPressed: (_selectedDay == false)
+          ? () => _selectedDayfunction(index, context)
+          : null,
     ),
   ));
 }
 
- 
-
-_selectedDayfunction(int index, BuildContext context){
-  if (!_selectedDay){
-     print("Tocou no $index");
+_selectedDayfunction(int index, BuildContext context) {
+  if (!_selectedDay) {
+    print("Tocou no $index");
     _selectedDay = true;
     print("Selected day $_selectedDay");
-  }else {
+  } else {
     _showAlertDialog("Opa!", "Voce ja selecionou seu humor hoje!", context);
   }
- 
 }
-
-//(_selectedDay == null) ? () =>  _selectedDayfunction(index) : null,
-// void teste = x = aaa(index);
-
-// int aaa(int index) {
-//   print("Tocou no $index");
-//   _selectedDay = true;
-// }
 
 Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
   return InkWell(
@@ -306,6 +254,7 @@ Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
         trailing: Icon(Icons.arrow_forward),
       ));
 }
+
 
 Widget _logoutSideMenu(
     BuildContext context, Function signout, String pegeTitle) {
@@ -328,26 +277,30 @@ Widget _buildCardsInRow(
             ));
       },
       child: Card(
-        //shadowColor: Colors.black,
-        color: MyColors.babyBlue, //Color.fromRGBO(248, 248, 255, 1),
+        shadowColor: Colors.black,
+        //color: MyColors.grey, //Color.fromRGBO(248, 248, 255, 1),
+        
         child: Container(
-          width: 150,
-          height: 90,
+          width: 200,
+          height: 100,
           decoration: new BoxDecoration(
-              color: MyColors.babyBlue, //Color.fromRGBO(248, 248, 255, 1),
+              //color: Colors.black, //Color.fromRGBO(248, 248, 255, 1),
               borderRadius: new BorderRadius.all(Radius.circular(10))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+  
               Container(
-                width: 5,
+                width: 10,
                 color: Colors.transparent,
               ),
+              
               Image.asset(
                 "assets/$icone.png",
                 width: 40,
                 height: 40,
                 fit: BoxFit.fill,
+                color: Colors.grey,
               ),
               Container(
                 width: 10,
@@ -363,7 +316,11 @@ Widget _buildCardsInRow(
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-              )
+              ),
+              // Container(
+              //   width: 5,
+              //   color: Colors.transparent,
+              // ),
             ],
           ),
         ),
@@ -371,25 +328,22 @@ Widget _buildCardsInRow(
 }
 
 void _showAlertDialog(String title, String message, BuildContext context) {
-   showDialog(
-     context: context,
-     builder: (BuildContext context) {
-       // return object of type Dialog
-       return AlertDialog(
-         title: new Text(title),
-         content:
-             new Text(message),
-         actions: <Widget>[
-           new FlatButton(
-             child: new Text("ok"),
-             onPressed: () {
-               Navigator.of(context).pop();
-             },
-           ),
-         ],
-       );
-     },
-   );
- }
-
-
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // return object of type Dialog
+      return AlertDialog(
+        title: new Text(title),
+        content: new Text(message),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text("ok"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}

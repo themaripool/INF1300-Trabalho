@@ -44,8 +44,8 @@ class _BreathingPageState extends State<BreathingPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.grey),
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.close),
