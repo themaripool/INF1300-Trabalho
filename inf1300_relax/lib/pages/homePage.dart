@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:inf1300_relax/utility/profileImageUtil.dart';
 import 'package:inf1300_relax/utility/utility.dart';
 import 'graficoPage.dart';
 import 'dayListPage.dart';
@@ -32,6 +35,8 @@ var _selectedDay = false;
 class _HomePageState extends State<HomePage> {
   String _username;
   String _useremail;
+  var imageSalva;
+  ImageProvider<dynamic> _imagem = AssetImage('assets/profileBackground1.jpeg');
 
   // var teste = (int index) => {
   //   print ("Voce clicou em $index")
@@ -63,10 +68,21 @@ class _HomePageState extends State<HomePage> {
         _useremail = user.email;
       });
     });
+
+    ProfileImageUtil.getImageFromPreferences().then((img) {
+      setState(() {
+        _imagem = (img != null) ? Image.file(File(img)).image : AssetImage('assets/profileBackground1.jpeg');
+        imageSalva = img;
+        print("aa");
+        print("img - $img");
+        print("image salva - $imageSalva");
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    var imageSalva;
     ThemeStore themeStore = Provider.of<ThemeStore>(context);
 
     DateTime date = new DateTime.now();
@@ -157,12 +173,12 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               // Botao da ir para grafico
-              _buildCardsInRow(
-                  context, GraficoPage(), 'Gráfico de humor', 'iconeGrafico'),
+              // _buildCardsInRow(
+              //     context, GraficoPage(), 'Gráfico de humor', 'iconeGrafico'),
 
-              // Botao da ir pro historico
-              _buildCardsInRow(context, DayListPage(userId: widget.userId),
-                  'Histórico de humor', 'iconeHistorico'),
+              // // Botao da ir pro historico
+              // _buildCardsInRow(context, DayListPage(userId: widget.userId),
+              //     'Histórico de humor', 'iconeHistorico'),
             ],
           ),
 
@@ -170,8 +186,8 @@ class _HomePageState extends State<HomePage> {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             _buildCardsInRow(
                 context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
-            _buildCardsInRow(context, AddDiaryPage(userId: widget.userId),
-                "Escrever diário", 'iconeDiario'),
+             _buildCardsInRow(context, BreathingListPage(),
+                 "Respirações", 'iconeRespAbd'),
           ]),
         ],
       )),
@@ -200,17 +216,15 @@ class _HomePageState extends State<HomePage> {
                 //   fit: BoxFit.cover),
               ),
               currentAccountPicture: new CircleAvatar(
-                backgroundColor: Colors.blueGrey,
-                child: new Text("M"),
+                backgroundImage: _imagem
+                // (imageSalva != null)
+                //         ? Image.file(File(imageSalva)).image
+                //         : AssetImage("assets/placeholder.png")
               ),
             ),
-            _buildSideMenu(context, ProfilePage(), 'Perfil'),
-            new Divider(),
-            _buildSideMenu(context, ImagesPage(), 'Ajustes'),
+            _buildSideMenu(context, ProfilePage(userId: widget.userId, username: _username), 'Perfil'),
             new Divider(),
             _logoutSideMenu(context, signOut, 'Sair'),
-            new Divider(),
-            _buildSideMenu(context, BreathingListPage(), 'Breathing Page'),
             new Divider(),
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -256,6 +270,8 @@ Widget _buildHumor(String emoji, int index, BuildContext context) {
     ),
   ));
 }
+
+ 
 
 _selectedDayfunction(int index, BuildContext context){
   if (!_selectedDay){
@@ -375,3 +391,5 @@ void _showAlertDialog(String title, String message, BuildContext context) {
      },
    );
  }
+
+
