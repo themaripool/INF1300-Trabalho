@@ -13,6 +13,7 @@ import 'addDiaryPage.dart';
 import '../pages/breathingList.dart';
 import '../colors/customColors.dart';
 import 'profilePage.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
@@ -31,12 +32,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  static const platform = const MethodChannel('samples.flutter.dev/battery');
+
   String _username;
   String _useremail;
+  int _batteryLevel;
 
   Utility _utility = new Utility();  
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  Future<void> _getBatteryLevel() async {
+    int batteryLevel;
+    try {
+      final int result = await platform.invokeMethod('getBatteryLevel');
+      batteryLevel = result;
+      print(batteryLevel)
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
+  }
 
 
   signOut() async {
