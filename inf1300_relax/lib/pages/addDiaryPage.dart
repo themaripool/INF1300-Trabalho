@@ -104,8 +104,15 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
           child: Column(children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 15, bottom: 40),
-          child: Text("Página de Diário",
-            textAlign: TextAlign.center,            
+          child: 
+             Text(
+              "Me conte sobre seu dia!",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontFamily: 'OpenSans',
+                fontStyle: FontStyle.italic,
+                fontSize: 20,
+              ),          
           ),
         ),
 

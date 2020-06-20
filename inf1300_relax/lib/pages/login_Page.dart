@@ -93,15 +93,23 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Flutter login demo'),
-        ),
+        
         body: Stack(
           children: <Widget>[
+            //_showForm(),
+            //_loginTestUI(),
+            _background(),
             _showForm(),
             _showCircularProgress(),
           ],
         ));
+  }
+
+  Widget _background(){
+
+    return Container(
+      color: Colors.grey.shade100
+    );
   }
 
   Widget _showCircularProgress() {
@@ -169,6 +177,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             shrinkWrap: true,
             children: <Widget>[
               showLogo(),
+              //_space(),
               if(!_isLoginForm)
                 showUsernameInput(),
               showEmailInput(),
@@ -202,19 +211,27 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return new Hero(
       tag: 'hero',
       child: Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
-        child: CircleAvatar(
-          backgroundColor: Colors.transparent,
-          radius: 48.0,
-          child: Image.asset('assets/logo2.png'),
+        padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+        child: Container(
+          //backgroundColor: Colors.transparent,
+          //radius: 48.0,
+          child: Image.asset('assets/logo3_sf.png', width: 150, height: 150,),
         ),
       ),
     );
   }
 
+  Widget _space(){
+    return new Container(
+      height: 150,
+      width: 150,
+      color: Colors.transparent,
+    );
+  }
+
   Widget showUsernameInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 50.0, 0.0, 0.0),
       child: new TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
@@ -286,9 +303,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             elevation: 5.0,
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
-            color: Colors.blue,
+            color: Colors.white,
             child: new Text(_isLoginForm ? 'Login' : 'Create account',
-                style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+                style: new TextStyle(fontSize: 20.0, color: Colors.black)),
             onPressed: validateAndSubmit,
           ),
         ));

@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,8 @@ import '../colors/customColors.dart';
 import 'profilePage.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
+  HomePage({Key key, this.title, this.userId, this.auth, this.logoutCallback})
+      : super(key: key);
 
   final String userId;
   final String title;
@@ -26,18 +26,24 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
- bool isOn = false;
-
+bool isOn = false;
+var _selectedDay = false;
 
 class _HomePageState extends State<HomePage> {
-
   String _username;
   String _useremail;
 
-  Utility _utility = new Utility();  
+  // var teste = (int index) => {
+  //   print ("Voce clicou em $index")
+  //   setState(() {
+  //     teste = (int index) => {};
+  //   })
+  // };
+  
+
+  Utility _utility = new Utility();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
-
 
   signOut() async {
     try {
@@ -49,23 +55,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    widget.auth.getCurrentUser().then((user){
-      setState((){
+    widget.auth.getCurrentUser().then((user) {
+      setState(() {
         _username = user.displayName;
         _useremail = user.email;
       });
-
     });
-    
-
   }
 
-
   @override
-  Widget build(BuildContext context){
-
+  Widget build(BuildContext context) {
     ThemeStore themeStore = Provider.of<ThemeStore>(context);
 
     DateTime date = new DateTime.now();
@@ -85,7 +86,8 @@ class _HomePageState extends State<HomePage> {
             width: 300,
             height: 50,
             child: Text(
-              _utility.escolheDiaSemana(date.weekday) + ", ${date.day}/${date.month}",
+              _utility.escolheDiaSemana(date.weekday) +
+                  ", ${date.day}/${date.month}",
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontFamily: 'OpenSans',
@@ -98,12 +100,12 @@ class _HomePageState extends State<HomePage> {
           Card(
               //shadowColor: Colors.black,
 
-              color: MyColors.grey,//Color.fromRGBO(248, 248, 255, 1),
+              color: MyColors.grey, //Color.fromRGBO(248, 248, 255, 1),
               child: Container(
                 width: 300,
                 height: 150,
                 decoration: new BoxDecoration(
-                    color: MyColors.grey, //Theme.of(context).accentColor, 
+                    color: MyColors.grey, //Theme.of(context).accentColor,
                     borderRadius: new BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   children: <Widget>[
@@ -118,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontStyle: FontStyle.italic,
-                            fontSize: 15, 
+                            fontSize: 15,
                             color: MyColors.purple),
                       ),
                     ),
@@ -134,19 +136,11 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          Container(
-                            child: Text('😔'),
-                          ),
-                          Container(
-                            child: Text('😶'),
-                          ),
-                          Container(
-                            child: Text('😑'),
-                          ),
-                          Container(
-                            child: Text('🙂'),
-                          ),
-                          Container(child: Text('😁'))
+                          _buildHumor('😔', 1, context),
+                          _buildHumor('😶', 2, context),
+                          _buildHumor('😑', 3, context),
+                          _buildHumor('🙂', 4, context),
+                          _buildHumor('😁', 5, context),
                         ],
                       ),
                     ),
@@ -167,8 +161,8 @@ class _HomePageState extends State<HomePage> {
                   context, GraficoPage(), 'Gráfico de humor', 'iconeGrafico'),
 
               // Botao da ir pro historico
-              _buildCardsInRow(
-                  context, DayListPage(userId:widget.userId), 'Histórico de humor', 'iconeHistorico'),
+              _buildCardsInRow(context, DayListPage(userId: widget.userId),
+                  'Histórico de humor', 'iconeHistorico'),
             ],
           ),
 
@@ -176,10 +170,9 @@ class _HomePageState extends State<HomePage> {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             _buildCardsInRow(
                 context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
-             _buildCardsInRow(
-                context, AddDiaryPage(userId:widget.userId), "Escrever diário", 'iconeDiario'),
+            _buildCardsInRow(context, AddDiaryPage(userId: widget.userId),
+                "Escrever diário", 'iconeDiario'),
           ]),
-
         ],
       )),
 
@@ -191,21 +184,26 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text("Olá $_username. Bem vindo(a) de volta!", style: TextStyle(color: Colors.white)),
-              accountEmail: Text("$_useremail", style: TextStyle(color: Colors.white),),
+              accountName: Text("Olá $_username. Bem vindo(a) de volta!",
+                  style: TextStyle(color: Colors.white)),
+              accountEmail: Text(
+                "$_useremail",
+                style: TextStyle(color: Colors.white),
+              ),
               decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image:new ExactAssetImage('assets/profileBackground1.jpeg'),
-                  colorFilter: ColorFilter.srgbToLinearGamma(),
-                  fit: BoxFit.cover),
+                gradient: LinearGradient(colors: [MyColors.a, MyColors.a]),
+
+                //Colors.indigo.shade500, Colors.indigo.shade300
+                // image: new DecorationImage(
+                //   image:new ExactAssetImage('assets/profileBackground1.jpeg'),
+                //   colorFilter: ColorFilter.srgbToLinearGamma(),
+                //   fit: BoxFit.cover),
               ),
               currentAccountPicture: new CircleAvatar(
                 backgroundColor: Colors.blueGrey,
                 child: new Text("M"),
-
               ),
             ),
-
             _buildSideMenu(context, ProfilePage(), 'Perfil'),
             new Divider(),
             _buildSideMenu(context, ImagesPage(), 'Ajustes'),
@@ -214,21 +212,21 @@ class _HomePageState extends State<HomePage> {
             new Divider(),
             _buildSideMenu(context, BreathingListPage(), 'Breathing Page'),
             new Divider(),
-
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text("Ativar dark mode"),
                 ),
-                
-                Switch(value: isOn, onChanged: (bool value){
-                  setState(() {
-                    isOn = value;
-                    themeStore.switchTheme();
-                  });},
+                Switch(
+                  value: isOn,
+                  onChanged: (bool value) {
+                    setState(() {
+                      isOn = value;
+                      themeStore.switchTheme();
+                    });
+                  },
                   activeColor: Colors.green,
                   activeTrackColor: Colors.lightGreenAccent,
                 )
@@ -241,6 +239,43 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+Widget _buildHumor(String emoji, int index, BuildContext context) {
+  print("Selected day func 1 $_selectedDay");
+  return Container(
+      child: SizedBox(
+    width: 50, // specific value
+    child: FlatButton(
+      child: Text(emoji),
+
+      color: Colors.transparent,
+      // onPressed: (){
+      //   print("Tocou no $index");
+      // }
+      onPressed: 
+          (_selectedDay == false) ? () => _selectedDayfunction(index, context) : null,
+    ),
+  ));
+}
+
+_selectedDayfunction(int index, BuildContext context){
+  if (!_selectedDay){
+     print("Tocou no $index");
+    _selectedDay = true;
+    print("Selected day $_selectedDay");
+  }else {
+    _showAlertDialog("Opa!", "Voce ja selecionou seu humor hoje!", context);
+  }
+ 
+}
+
+//(_selectedDay == null) ? () =>  _selectedDayfunction(index) : null,
+// void teste = x = aaa(index);
+
+// int aaa(int index) {
+//   print("Tocou no $index");
+//   _selectedDay = true;
+// }
+
 Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
   return InkWell(
       onTap: () {
@@ -251,25 +286,23 @@ Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
             ));
       },
       child: ListTile(
-              title: Text("$pegeTitle"),
-              trailing:  Icon(Icons.arrow_forward),
-
-            )
-      );
+        title: Text("$pegeTitle"),
+        trailing: Icon(Icons.arrow_forward),
+      ));
 }
 
-Widget _logoutSideMenu(BuildContext context, Function signout, String pegeTitle) {
+Widget _logoutSideMenu(
+    BuildContext context, Function signout, String pegeTitle) {
   return InkWell(
       onTap: () => signout(),
       child: ListTile(
-              title: Text("$pegeTitle"),
-              trailing:  Icon(Icons.arrow_forward),
-
-            )
-      );
+        title: Text("$pegeTitle"),
+        trailing: Icon(Icons.arrow_forward),
+      ));
 }
 
-Widget _buildCardsInRow( BuildContext context, Widget page, String title, String icone) {
+Widget _buildCardsInRow(
+    BuildContext context, Widget page, String title, String icone) {
   return InkWell(
       onTap: () {
         Navigator.push(
@@ -280,7 +313,7 @@ Widget _buildCardsInRow( BuildContext context, Widget page, String title, String
       },
       child: Card(
         //shadowColor: Colors.black,
-        color: MyColors.babyBlue,//Color.fromRGBO(248, 248, 255, 1),
+        color: MyColors.babyBlue, //Color.fromRGBO(248, 248, 255, 1),
         child: Container(
           width: 150,
           height: 90,
@@ -320,3 +353,25 @@ Widget _buildCardsInRow( BuildContext context, Widget page, String title, String
         ),
       ));
 }
+
+void _showAlertDialog(String title, String message, BuildContext context) {
+   showDialog(
+     context: context,
+     builder: (BuildContext context) {
+       // return object of type Dialog
+       return AlertDialog(
+         title: new Text(title),
+         content:
+             new Text(message),
+         actions: <Widget>[
+           new FlatButton(
+             child: new Text("ok"),
+             onPressed: () {
+               Navigator.of(context).pop();
+             },
+           ),
+         ],
+       );
+     },
+   );
+ }

@@ -36,4 +36,17 @@ class MyColors {
       50: Color(0xFFa2bad6),
     },
   );
+
+  static const MaterialColor a = MaterialColor(
+    0xFFa2bad6,
+    <int, Color>{
+      50: Color(0xFF726A8F),
+    },
+  );
+
+
+
+
+
+
 }

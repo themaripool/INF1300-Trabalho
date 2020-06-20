@@ -102,6 +102,7 @@ class _DayListPageState extends State<DayListPage> {
       appBar: AppBar(
          elevation: 0.0,
         backgroundColor: const Color(0xFFFFFFFF).withOpacity(0.5),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
 
