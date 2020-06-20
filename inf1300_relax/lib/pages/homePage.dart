@@ -1,3 +1,4 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +10,12 @@ import 'package:provider/provider.dart';
 import '../pages/breathingList.dart';
 import '../colors/customColors.dart';
 import 'profilePage.dart';
+import 'package:flutter/services.dart';
+import 'dart:async';
+import 'package:screen/screen.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title, this.userId, this.auth, this.logoutCallback})
-      : super(key: key);
+  HomePage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
 
   final String userId;
   final String title;
@@ -23,18 +26,55 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-bool isOn = false;
-var _selectedDay = false;
+ bool isOn = false;
+
 
 class _HomePageState extends State<HomePage> {
+
+  static const platform = const MethodChannel('samples.flutter.dev/battery');
+
   String _username;
   String _useremail;
+  int _batteryLevel;
+  double _brightness;
+  bool _brightnessIsChanged;
+  Timer timer;
   var imageSalva;
   var result;
 
   Utility _utility = new Utility();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+
+  initPlatformState() async {
+    double brightness = await Screen.brightness;
+    setState((){
+      _brightness = brightness;
+    });
+  }
+
+  Future<void> _getBatteryLevel() async {
+    int batteryLevel;
+    final int result = await platform.invokeMethod('getBatteryLevel');
+    batteryLevel = result;
+    setState(() {
+      _batteryLevel = batteryLevel;
+      if(_batteryLevel < 20 && !_brightnessIsChanged)
+      {
+        //Diminui brilho na metade
+        Screen.setBrightness(_brightness/2);
+        _brightnessIsChanged = true;
+      }
+      else if (_batteryLevel >= 20 && _brightnessIsChanged){
+        //Volta ao valor original
+        Screen.setBrightness(_brightness);
+        _brightnessIsChanged = false;
+      }
+
+    });
+  }
+
 
   signOut() async {
     try {
@@ -46,18 +86,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    widget.auth.getCurrentUser().then((user) {
-      setState(() {
+    _brightnessIsChanged = false;
+    initPlatformState();
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => _getBatteryLevel());
+    widget.auth.getCurrentUser().then((user){
+      setState((){
         _username = user.displayName;
         _useremail = user.email;
       });
+
     });
+
+
+  }
+  @override
+  void dispose(){
+    timer?.cancel;
+    super.dispose();
   }
 
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+
     ThemeStore themeStore = Provider.of<ThemeStore>(context);
 
     DateTime date = new DateTime.now();
@@ -77,8 +130,7 @@ class _HomePageState extends State<HomePage> {
             width: 300,
             height: 50,
             child: Text(
-              _utility.escolheDiaSemana(date.weekday) +
-                  ", ${date.day}/${date.month}",
+              _utility.escolheDiaSemana(date.weekday) + ", ${date.day}/${date.month}",
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontFamily: 'OpenSans',
@@ -135,18 +187,17 @@ class _HomePageState extends State<HomePage> {
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text("Ativar dark mode"),
                 ),
-                Switch(
-                  value: isOn,
-                  onChanged: (bool value) {
-                    setState(() {
-                      isOn = value;
-                      themeStore.switchTheme();
-                    });
-                  },
+
+                Switch(value: isOn, onChanged: (bool value){
+                  setState(() {
+                    isOn = value;
+                    themeStore.switchTheme();
+                  });},
                   activeColor: Colors.green,
                   activeTrackColor: Colors.lightGreenAccent,
                 )
@@ -250,24 +301,25 @@ Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
             ));
       },
       child: ListTile(
-        title: Text("$pegeTitle"),
-        trailing: Icon(Icons.arrow_forward),
-      ));
+              title: Text("$pegeTitle"),
+              trailing:  Icon(Icons.arrow_forward),
+
+            )
+      );
 }
 
-
-Widget _logoutSideMenu(
-    BuildContext context, Function signout, String pegeTitle) {
+Widget _logoutSideMenu(BuildContext context, Function signout, String pegeTitle) {
   return InkWell(
       onTap: () => signout(),
       child: ListTile(
-        title: Text("$pegeTitle"),
-        trailing: Icon(Icons.arrow_forward),
-      ));
+              title: Text("$pegeTitle"),
+              trailing:  Icon(Icons.arrow_forward),
+
+            )
+      );
 }
 
-Widget _buildCardsInRow(
-    BuildContext context, Widget page, String title, String icone) {
+Widget _buildCardsInRow( BuildContext context, Widget page, String title, String icone) {
   return InkWell(
       onTap: () {
         Navigator.push(
@@ -279,7 +331,7 @@ Widget _buildCardsInRow(
       child: Card(
         shadowColor: Colors.black,
         //color: MyColors.grey, //Color.fromRGBO(248, 248, 255, 1),
-        
+
         child: Container(
           width: 200,
           height: 100,
@@ -289,12 +341,12 @@ Widget _buildCardsInRow(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-  
+
               Container(
                 width: 10,
                 color: Colors.transparent,
               ),
-              
+
               Image.asset(
                 "assets/$icone.png",
                 width: 40,
