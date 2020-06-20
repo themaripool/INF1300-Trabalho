@@ -2,6 +2,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 import 'package:inf1300_relax/utility/utility.dart';
 import 'graficoPage.dart';
 import 'dayListPage.dart';
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
   }
   @override
   void dispose(){
-    timer?.cancel;
+    timer?.cancel();
     super.dispose();
   }
 
@@ -131,7 +132,7 @@ class _HomePageState extends State<HomePage> {
             width: 300,
             height: 50,
             child: Text(
-              _utility.escolheDiaSemana(date.weekday) + ", ${date.day}/${date.month}",
+              _utility.escolheDiaSemana(date.weekday, context) + ", ${date.day}/${date.month}",
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontFamily: 'OpenSans',
@@ -159,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                       width: 300,
                       height: 25,
                       child: Text(
-                        "Como você está se sentindo hoje?",
+                        AppLocalizations.of(context).translate('selecionarHumor'),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: 'OpenSans',
@@ -214,16 +215,16 @@ class _HomePageState extends State<HomePage> {
 
               // Botao da ir pro historico
               _buildCardsInRow(
-                  context, DayListPage(userId:widget.userId), 'Histórico de humor', 'iconeHistorico'),
+                  context, DayListPage(userId:widget.userId), AppLocalizations.of(context).translate('historico'), 'iconeHistorico'),
             ],
           ),
 
           //SECOND ROW
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             _buildCardsInRow(
-                context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
+                context, ImagesPage(), AppLocalizations.of(context).translate('galeriaImagens'), 'iconeGaleria'),
              _buildCardsInRow(
-                context, AddDiaryPage(userId:widget.userId), "Escrever diário", 'iconeDiario'),
+                context, AddDiaryPage(userId:widget.userId), AppLocalizations.of(context).translate('escreverDiario'), 'iconeDiario'),
           ]),
 
         ],
@@ -237,7 +238,7 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text("Olá $_username. Bem vindo(a) de volta!", style: TextStyle(color: Colors.white)),
+              accountName: Text(AppLocalizations.of(context).translate('ola')+ " $_username. " + AppLocalizations.of(context).translate('bemvindo'), style: TextStyle(color: Colors.white)),
               accountEmail: Text("$_useremail", style: TextStyle(color: Colors.white),),
               decoration: new BoxDecoration(
                 image: new DecorationImage(
@@ -252,13 +253,13 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            _buildSideMenu(context, ProfilePage(), 'Perfil'),
+            _buildSideMenu(context, ProfilePage(), AppLocalizations.of(context).translate('perfil')),
             new Divider(),
-            _buildSideMenu(context, ImagesPage(), 'Ajustes'),
+            _buildSideMenu(context, ImagesPage(), AppLocalizations.of(context).translate('ajustes')),
             new Divider(),
-            _logoutSideMenu(context, signOut, 'Sair'),
+            _logoutSideMenu(context, signOut, AppLocalizations.of(context).translate('sair')),
             new Divider(),
-            _buildSideMenu(context, BreathingListPage(), 'Breathing Page'),
+            _buildSideMenu(context, BreathingListPage(), AppLocalizations.of(context).translate('respiração')),
             new Divider(),
 
             new Row(
@@ -267,7 +268,7 @@ class _HomePageState extends State<HomePage> {
 
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: Text("Ativar dark mode"),
+                  child: Text(AppLocalizations.of(context).translate('modoEscuro')),
                 ),
                 
                 Switch(value: isOn, onChanged: (bool value){

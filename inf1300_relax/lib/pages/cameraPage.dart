@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 
 
 class CameraPage extends StatefulWidget {
@@ -36,12 +37,12 @@ class _CameraPageState extends State<CameraPage> {
   Future<void> _showChoiceDialog(BuildContext context){
     return showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
-        title: Text("Escolher imagem de:"),
+        title: Text(AppLocalizations.of(context).translate('escolherimagemde')),
         content: SingleChildScrollView(
           child: ListBody(
             children: [
               GestureDetector(
-                child: Text("Galeria"),
+                child: Text(AppLocalizations.of(context).translate('galeria')),
                 onTap: (){
                   _openGalery();
                 },
@@ -50,7 +51,7 @@ class _CameraPageState extends State<CameraPage> {
               Padding(padding: EdgeInsets.all(8),),
 
               GestureDetector(
-                child: Text("Camera"),
+                child: Text(AppLocalizations.of(context).translate('camera')),
                 onTap: (){
                   _openCamera();
                 },
@@ -64,7 +65,7 @@ class _CameraPageState extends State<CameraPage> {
 
   Widget _decideImageView(){
     if (imageFile == null){
-      return Text("Nenhuma imagem selecionada");
+      return Text(AppLocalizations.of(context).translate('nenhumaimagem'));
     }
     return Image.file(imageFile, width: 300, height:300,);
   }
@@ -77,7 +78,7 @@ class _CameraPageState extends State<CameraPage> {
           //Navigator.of(context).pop(imageFile.uri.path);
           Navigator.pop(context, imageFile.uri.path);
         }, 
-        child: Text("Salvar imagem"),
+        child: Text(AppLocalizations.of(context).translate('salvarimagem')),
       );
     } else {
       return Container(
@@ -110,7 +111,7 @@ class _CameraPageState extends State<CameraPage> {
               onPressed: (){
                 _showChoiceDialog(context);
               }, 
-              child: Text("Selecionar imagem"),),
+              child: Text(AppLocalizations.of(context).translate('selecionarimagem')),),
             _saveProfileImage()
           ],
         )

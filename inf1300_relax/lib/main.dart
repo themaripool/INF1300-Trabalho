@@ -9,6 +9,10 @@ import 'services/authentication.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'themeStore.dart';
 import 'package:provider/provider.dart';
+import 'i18n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+
 
 // void main() => runApp(MyApp());
 
@@ -35,6 +39,15 @@ class MyApp extends StatelessWidget {
     return Observer(
       name: 'theme_store_observer',
       builder: (BuildContext context) => MaterialApp(
+      supportedLocales: [
+        Locale('pt', 'BR'),
+        Locale('en', 'US')
+      ],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
       title: 'Flutter Demo',
       theme: themeStore.themeStore,
       home: MyHomePage(title: 'Flutter Demo Home Page', auth: new Auth()),

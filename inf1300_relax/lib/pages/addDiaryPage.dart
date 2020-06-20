@@ -4,7 +4,7 @@ import 'package:inf1300_relax/services/authentication.dart';
 import '../models/dias.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
-
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 
 
 
@@ -106,7 +106,7 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
           padding: const EdgeInsets.only(left: 15, bottom: 40),
           child: 
              Text(
-              "Me conte sobre seu dia!",
+              AppLocalizations.of(context).translate('escreverDiarioPage'),
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'OpenSans',
@@ -125,7 +125,7 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
             maxLines: null,
             decoration: InputDecoration(
                 border: InputBorder.none, 
-                hintText: 'Insira seu texto aqui'
+                hintText: AppLocalizations.of(context).translate('escreverDiarioPageInsert')
             ),
           ),
         ),
@@ -147,7 +147,7 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
           }
           else{
             //JÁ FOI ADICIONADO DIÁRIO NESSE DIA
-            _showAlertDialog("Opa!", "Você já escreveu no diário hoje", context);
+            _showAlertDialog(AppLocalizations.of(context).translate('opa'), AppLocalizations.of(context).translate('jaescreveu'), context);
           }
             
            

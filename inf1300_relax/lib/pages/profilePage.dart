@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../colors/customColors.dart';
 import '../pages/cameraPage.dart';
 import '../utility/profileImageUtil.dart';
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 
 //class ProfilePage extends StatelessWidget {
 class ProfilePage extends StatefulWidget {
@@ -66,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
               //_navigationToCameraPage(context);
             },
             child: new Card(
-              child: Text("Escolher foto de perfil"),
+              child: Text(AppLocalizations.of(context).translate('escolherfoto')),
             )),
         _decideImageView(result),
       ],
@@ -109,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
           height: 50.0,
         ),
         Text(
-          "Seu nome aqui!",
+          AppLocalizations.of(context).translate('seunomeaqui'),
           style: Theme.of(context).textTheme.title,
         ),
         SizedBox(

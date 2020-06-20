@@ -1,3 +1,4 @@
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 class Utility {
 
   String escolheHumor(int humor){
@@ -36,41 +37,41 @@ class Utility {
     return ret;
   }
 
-  String escolheDiaSemana(int dia){
+  String escolheDiaSemana(int dia, context){
     String ret;
     switch(dia){
       case 0:{
-        ret = "Domingo";
+        ret = AppLocalizations.of(context).translate('domingo');
       }
       break;
       
       case 1:{
-        ret = "Segunda";
+        ret = AppLocalizations.of(context).translate('segunda');
       }
       break;
 
       case 2:{
-        ret = "Terça";
+        ret = AppLocalizations.of(context).translate('terca');
       }
       break;
 
       case 3:{
-        ret = "Quarta";
+        ret = AppLocalizations.of(context).translate('quarta');
       }
       break;
 
       case 4:{
-        ret = "Quinta";
+        ret = AppLocalizations.of(context).translate('quinta');
       }
       break;
 
       case 5:{
-        ret = "Sexta";
+        ret = AppLocalizations.of(context).translate('sexta');
       }
       break;
 
       case 6:{
-        ret = "Sábado";
+        ret = AppLocalizations.of(context).translate('sabado');
       }
       break;
     }
