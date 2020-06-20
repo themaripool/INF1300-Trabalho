@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       name: 'theme_store_observer',
       builder: (BuildContext context) => MaterialApp(
       supportedLocales: [
-        Locale('pt', 'BR'),
+        Locale('pt', ''),
         Locale('en', 'US')
       ],
       localizationsDelegates: [
