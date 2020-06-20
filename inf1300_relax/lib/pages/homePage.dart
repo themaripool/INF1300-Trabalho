@@ -66,11 +66,11 @@ class _HomePageState extends State<HomePage> {
         //Diminui brilho na metade
         Screen.setBrightness(_brightness/2);
         _brightnessIsChanged = true;
-        
       }
-      else{
+      else if (_batteryLevel >= 20 && _brightnessIsChanged){
         //Volta ao valor original
         Screen.setBrightness(_brightness);
+        _brightnessIsChanged = false;
       }
       
     });
