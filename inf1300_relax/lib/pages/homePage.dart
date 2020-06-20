@@ -14,6 +14,8 @@ import '../pages/breathingList.dart';
 import '../colors/customColors.dart';
 import 'profilePage.dart';
 import 'package:flutter/services.dart';
+import 'dart:async';
+import 'package:screen/screen.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
@@ -37,23 +39,40 @@ class _HomePageState extends State<HomePage> {
   String _username;
   String _useremail;
   int _batteryLevel;
+  double _brightness;
+  bool _brightnessIsChanged;
+  Timer timer;
 
   Utility _utility = new Utility();  
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
+  
+  initPlatformState() async {
+    double brightness = await Screen.brightness;
+    setState((){
+      _brightness = brightness;
+    });
+  }
+
   Future<void> _getBatteryLevel() async {
     int batteryLevel;
-    try {
-      final int result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = result;
-      print(batteryLevel)
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-    }
-
+    final int result = await platform.invokeMethod('getBatteryLevel');
+    batteryLevel = result;
     setState(() {
       _batteryLevel = batteryLevel;
+      if(_batteryLevel < 20 && !_brightnessIsChanged)
+      {
+        //Diminui brilho na metade
+        Screen.setBrightness(_brightness/2);
+        _brightnessIsChanged = true;
+        
+      }
+      else{
+        //Volta ao valor original
+        Screen.setBrightness(_brightness);
+      }
+      
     });
   }
 
@@ -70,6 +89,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState(){
     super.initState();
+    _brightnessIsChanged = false;
+    initPlatformState();
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => _getBatteryLevel());
     widget.auth.getCurrentUser().then((user){
       setState((){
         _username = user.displayName;
@@ -79,6 +101,11 @@ class _HomePageState extends State<HomePage> {
     });
     
 
+  }
+  @override
+  void dispose(){
+    timer?.cancel;
+    super.dispose();
   }
 
 
