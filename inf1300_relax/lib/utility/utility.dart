@@ -39,7 +39,7 @@ class Utility {
   String escolheDiaSemana(int dia){
     String ret;
     switch(dia){
-      case 0:{
+      case 7:{
         ret = "Domingo";
       }
       break;

@@ -116,7 +116,6 @@ class _HomePageState extends State<HomePage> {
     ThemeStore themeStore = Provider.of<ThemeStore>(context);
 
     DateTime date = new DateTime.now();
-    
     day = _utility.escolheDiaSemana(date.weekday);
     print("dia = $day");
     print("weekday = $date.weekday");
