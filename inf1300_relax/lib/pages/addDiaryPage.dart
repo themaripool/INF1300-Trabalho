@@ -80,7 +80,7 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
       String today = DateTime.now().toString().split(' ')[0];
       if(diario.length > 0){
         Dias dia = new Dias(today, diario, humor);
-        _database.reference().child("users").child(this.widget.userId).push().set(dia.toJson());
+        _database.reference().child("users").child(this.widget.userId).child(today).set(dia.toJson());
       }
     }
 

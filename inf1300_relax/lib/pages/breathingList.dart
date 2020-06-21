@@ -54,22 +54,22 @@ class _BreathingListPageState extends State<BreathingListPage> {
 
             Padding(
               padding: const EdgeInsets.only(top: 25),
-              child: _buildCards(context, BreathingPage(0), AppLocalizations.of(context).translate('respiracaoquadrada'), 'iconeRespQuadrada'),
+              child: _buildCards(context, BreathingPage(0,"assets/squareBreathing.gif", AppLocalizations.of(context).translate('respiracaoquadradadetalhe'), AppLocalizations.of(context).translate('respiracaoquadrada')), AppLocalizations.of(context).translate('respiracaoquadrada'), 'iconeRespQuadrada'),
             ), 
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, BreathingPage(1), AppLocalizations.of(context).translate('respiracaoabdominal'), 'iconeRespAbd'),
+              child: _buildCards(context, BreathingPage(1,"assets/abdBreathing.gif", AppLocalizations.of(context).translate('respiracaoabdominaldetalhe'), AppLocalizations.of(context).translate('respiracaoabdominal')), AppLocalizations.of(context).translate('respiracaoabdominal'), 'iconeRespAbd'),
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, BreathingPage(2), AppLocalizations.of(context).translate('respiracaoalta'), 'iconeRespAlta'),
+              child: _buildCards(context, BreathingPage(2,"assets/altaBreathing.gif", AppLocalizations.of(context).translate('respiracaoaltadetalhe'), AppLocalizations.of(context).translate('respiracaoalta')), AppLocalizations.of(context).translate('respiracaoalta'), 'iconeRespAlta'),
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, BreathingPage(3), AppLocalizations.of(context).translate('respiracaocompleta'), 'iconeRespComp'),
+              child: _buildCards(context, BreathingPage(3,"assets/completaBreathing.gif", AppLocalizations.of(context).translate('respiracaocompletadetalhe'), AppLocalizations.of(context).translate('respiracaocompleta')), AppLocalizations.of(context).translate('respiracaocompleta'), 'iconeRespComp'),
             ),  
       ])),
     );

@@ -49,5 +49,10 @@
     "respiracaocompleta": "Complete Breathing",
     "opa": "Ops!",
     "jaescreveu": "You have already written in the diary today!",
-    "jaselecionouhumor": "You have already selected your Humor today!"
+    "selecionouhumor": "Humor updated!",
+    "respiracaoquadradadetalhe": "\n 1 - Inhale for 4 seconds \n 2 - hold your breath inside your lungs and count to 4 \n 3 - exhale from your mouth, emptying your lungs and belly counting to 4 \n 4 - Pause counting to 4",
+    "respiracaoabdominaldetalhe": "\n 1 - Feel the air fill your lungs and your abdomen rise \n 2 - hold the air inside your lungs and count to 2 \n 3 - exhale through your mouth, emptying your lungs and belly counting to 6",
+    "respiracaoaltadetalhe": "High Breathing is how we breathe normally. The attention to these movements helps to better control the amount of air we inhale and exhale and the time used for this action.",
+    "respiracaocompletadetalhe": "Breathe in the air and feel it filling the abdominal area, inflating the belly and chest, expanding the rib region outward and the shoulders upward, as if your body is opening up internal space. Slowly move in the opposite direction to expiration.",
+    "hey": "Hey!"
 }

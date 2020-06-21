@@ -42,9 +42,11 @@ class _HomePageState extends State<HomePage> {
   double _brightness;
   bool _brightnessIsChanged;
   Timer timer;
+  Timer timerDay;
   var imageSalva;
   var result;
   String day;
+  String _today = DateTime.now().toString().split(' ')[0];
 
   Utility _utility = new Utility();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -92,8 +94,17 @@ class _HomePageState extends State<HomePage> {
     }
 
   }
-  
 
+  void verifyDay(){
+    String today = DateTime.now().toString().split(' ')[0];
+    if(today != _today){
+      setState(() {
+        _today = today;
+        _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByKey().equalTo(_today);
+    });
+    }
+    
+  }
 
   signOut() async {
     try {
@@ -111,7 +122,14 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _diaList[_diaList.indexOf(oldEntry)] =
           Dias.fromSnapshot(event.snapshot);
+      
+    if(_today != DateTime.now().toString().split(' ')[0]){
+      _today = DateTime.now().toString().split(' ')[0];
+      _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByKey().equalTo(_today);
+    }
     });
+
+    
   }
 
   onEntryAdded(Event event) {
@@ -122,40 +140,47 @@ class _HomePageState extends State<HomePage> {
   } 
   addNewDia(String diario, int humor){
       String today = DateTime.now().toString().split(' ')[0];
-      if(diario.length > 0){
+      if(humor > 0){
         Dias dia = new Dias(today, diario, humor);
-        _database.reference().child("users").child(this.widget.userId).push().set(dia.toJson());
+        _database.reference().child("users").child(this.widget.userId).child(today).set(dia.toJson());
       }
     }
 
   updateDia(Dias dia) {
     if (dia != null) {
-      _database.reference().child("users").child(this.widget.userId).child(dia.key).set(dia.toJson());
+      _database.reference().child("users").child(this.widget.userId).child(_today).set(dia.toJson());
     }
   }
 
   @override
   void initState(){
     super.initState();
+    _diaList = new List();
+    //String today = DateTime.now().toString().split(' ')[0];
+    
+    _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByKey().equalTo(_today);
+    _onDiaAddedSubscription = _diaQuery.onChildAdded.listen(onEntryAdded);
+    _onDiaChangedSubscription = _diaQuery.onChildChanged.listen(onEntryChanged);
     _brightnessIsChanged = false;
     initPlatformState();
     timer = Timer.periodic(Duration(seconds: 5), (Timer t) => _getBatteryLevel());
+    timerDay = Timer.periodic(Duration(seconds: 1), (Timer t) => verifyDay());
     widget.auth.getCurrentUser().then((user){
       setState((){
         _username = user.displayName;
         _useremail = user.email;
       });
-  _diaList = new List();
-  String today = DateTime.now().toString().split(' ')[0]; 
-  _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByChild("dia").equalTo(today);
-  _onDiaAddedSubscription = _diaQuery.onChildAdded.listen(onEntryAdded);
-  _onDiaChangedSubscription = _diaQuery.onChildChanged.listen(onEntryChanged);
+  
+
 
     });
   }
   @override
   void dispose(){
     timer?.cancel();
+    timerDay?.cancel();
+    _onDiaAddedSubscription.cancel();
+    _onDiaChangedSubscription.cancel();
     super.dispose();
   }
 
@@ -339,15 +364,15 @@ Widget _buildHumor(String emoji, int index, BuildContext context) {
 
 _selectedDayfunction(int index, BuildContext context) {
   if (_diaList.isEmpty) {
-    print("Tocou no $index");
+    print(_diaList.length);
     addNewDia("", index);
+    _showAlertDialog(AppLocalizations.of(context).translate('hey'), AppLocalizations.of(context).translate('selecionouhumor'), context);
   }
   else if(_diaList[0].humor == 0){
-    print("Tocou no $index");
+    print(_diaList.length);
     _diaList[0].humor = index;
     updateDia(_diaList[0]);
-  } else {
-    _showAlertDialog(AppLocalizations.of(context).translate('opa'), AppLocalizations.of(context).translate('jaselecionouhumor'), context);
+    _showAlertDialog(AppLocalizations.of(context).translate('hey'), AppLocalizations.of(context).translate('selecionouhumor'), context);
   }
 }
 }

@@ -13,6 +13,7 @@ class Dias {
     dia = snapshot.value["dia"],
     diario = snapshot.value["diario"],
     humor = snapshot.value["humor"];
+    
 
   toJson() {
     return {

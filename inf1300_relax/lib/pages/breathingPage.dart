@@ -11,9 +11,12 @@ class BreathingPage extends StatefulWidget {
   // BreathingPage({Key key, this.title, this.i}) : super(key: key);
 
   final int index;
+  final String details;
+  final String tittle;
+  final String gif;
 
 
-  BreathingPage(this.index);
+  BreathingPage(this.index, this.gif, this.details, this.tittle);
 
   @override
   _BreathingPageState createState() => _BreathingPageState();
@@ -58,7 +61,8 @@ class _BreathingPageState extends State<BreathingPage> {
       body: Center(
           child: Column(children: <Widget>[
 
-            Text(respiracoes[widget.index]["title"],
+              Text(
+              widget.tittle,
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'OpenSans',
@@ -68,24 +72,22 @@ class _BreathingPageState extends State<BreathingPage> {
             ),
 
             Padding(padding: EdgeInsets.only(left: 10, right: 10, top: 10), 
-              child: Expanded(
-                child: AutoSizeText(
-                  respiracoes[widget.index]["texto"],
-                  style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontStyle: FontStyle.italic,
-                      fontSize: 15),
-                  maxLines: 15,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              child: AutoSizeText(
+                widget.details,
+                style: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontStyle: FontStyle.italic,
+                    fontSize: 15),
+                maxLines: 15,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
 
             Padding(padding: EdgeInsets.only(left: 10, right: 10), 
               child: Image.asset(
-                respiracoes[widget.index]["gif"],
-                // height: 440.0,
-                // width: 445.0,
+                widget.gif,
+                 height: 440.0,
+                 width: 445.0,
               )
             )
             

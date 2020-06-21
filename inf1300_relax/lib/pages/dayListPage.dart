@@ -52,12 +52,12 @@ class _DayListPageState extends State<DayListPage> {
   }
 
   addNewDia(String diario, int humor){
-    String today = DateTime.now().toString();
-    if(diario.length > 0){
-      Dias dia = new Dias(today, diario, humor);
-      _database.reference().child("users").child(this.widget.userId).push().set(dia.toJson());
+      String today = DateTime.now().toString().split(' ')[0];
+      if(diario.length > 0){
+        Dias dia = new Dias(today, diario, humor);
+        _database.reference().child("users").child(this.widget.userId).child(today).set(dia.toJson());
+      }
     }
-  }
 
   onEntryChanged(Event event) {
     var oldEntry = _diaList.singleWhere((entry) {
