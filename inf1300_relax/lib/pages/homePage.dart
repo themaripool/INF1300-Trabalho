@@ -14,6 +14,8 @@ import 'profilePage.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 import 'package:screen/screen.dart';
+import 'package:inf1300_relax/models/dias.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title, this.userId, this.auth, this.logoutCallback}) : super(key: key);
@@ -28,7 +30,6 @@ class HomePage extends StatefulWidget {
 }
 
  bool isOn = false;
- bool _selectedDay = false;
 
 
 class _HomePageState extends State<HomePage> {
@@ -49,6 +50,15 @@ class _HomePageState extends State<HomePage> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
+  
+  Query _diaQuery;
+  List<Dias> _diaList = [];
+
+  final FirebaseDatabase _database = FirebaseDatabase.instance;
+    
+  StreamSubscription<Event> _onDiaAddedSubscription;
+  StreamSubscription<Event> _onDiaChangedSubscription;
+
 
   initPlatformState() async {
     double brightness = await Screen.brightness;
@@ -61,22 +71,28 @@ class _HomePageState extends State<HomePage> {
     int batteryLevel;
     final int result = await platform.invokeMethod('getBatteryLevel');
     batteryLevel = result;
-    setState(() {
-      _batteryLevel = batteryLevel;
-      if(_batteryLevel < 20 && !_brightnessIsChanged)
-      {
-        //Diminui brilho na metade
+    _batteryLevel = batteryLevel;
+   
+    
+    if(_batteryLevel < 20 && !_brightnessIsChanged)
+    {
+      //Diminui brilho na metade
+      setState(() {
         Screen.setBrightness(_brightness/2);
         _brightnessIsChanged = true;
-      }
-      else if (_batteryLevel >= 20 && _brightnessIsChanged){
-        //Volta ao valor original
+      });
+
+    }
+    else if (_batteryLevel >= 20 && _brightnessIsChanged){
+      //Volta ao valor original
+      setState(() {
         Screen.setBrightness(_brightness);
         _brightnessIsChanged = false;
-      }
+      });
+    }
 
-    });
   }
+  
 
 
   signOut() async {
@@ -85,6 +101,36 @@ class _HomePageState extends State<HomePage> {
       widget.logoutCallback();
     } catch (e) {
       print(e);
+    }
+  }
+  onEntryChanged(Event event) {
+    var oldEntry = _diaList.singleWhere((entry) {
+      return entry.key == event.snapshot.key;
+    });
+
+    setState(() {
+      _diaList[_diaList.indexOf(oldEntry)] =
+          Dias.fromSnapshot(event.snapshot);
+    });
+  }
+
+  onEntryAdded(Event event) {
+    setState(() {
+      _diaList.add(Dias.fromSnapshot(event.snapshot));
+    });
+  
+  } 
+  addNewDia(String diario, int humor){
+      String today = DateTime.now().toString().split(' ')[0];
+      if(diario.length > 0){
+        Dias dia = new Dias(today, diario, humor);
+        _database.reference().child("users").child(this.widget.userId).push().set(dia.toJson());
+      }
+    }
+
+  updateDia(Dias dia) {
+    if (dia != null) {
+      _database.reference().child("users").child(this.widget.userId).child(dia.key).set(dia.toJson());
     }
   }
 
@@ -99,6 +145,11 @@ class _HomePageState extends State<HomePage> {
         _username = user.displayName;
         _useremail = user.email;
       });
+  _diaList = new List();
+  String today = DateTime.now().toString().split(' ')[0]; 
+  _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByChild("dia").equalTo(today);
+  _onDiaAddedSubscription = _diaQuery.onChildAdded.listen(onEntryAdded);
+  _onDiaChangedSubscription = _diaQuery.onChildChanged.listen(onEntryChanged);
 
     });
   }
@@ -213,7 +264,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
+
 
 Widget _cardHumor(BuildContext context) {
   return Card(
@@ -268,7 +319,7 @@ Widget _cardHumor(BuildContext context) {
 }
 
 Widget _buildHumor(String emoji, int index, BuildContext context) {
-  print("Selected day func 1 $_selectedDay");
+  //print("Selected day func 1 $_selectedDay");
   return Container(
       child: SizedBox(
     width: 50, // specific value
@@ -279,7 +330,7 @@ Widget _buildHumor(String emoji, int index, BuildContext context) {
       // onPressed: (){
       //   print("Tocou no $index");
       // }
-      onPressed: (_selectedDay == false)
+      onPressed: (_diaList.isEmpty || _diaList[0].humor == 0)
           ? () => _selectedDayfunction(index, context)
           : null,
     ),
@@ -287,13 +338,18 @@ Widget _buildHumor(String emoji, int index, BuildContext context) {
 }
 
 _selectedDayfunction(int index, BuildContext context) {
-  if (!_selectedDay) {
+  if (_diaList.isEmpty) {
     print("Tocou no $index");
-    _selectedDay = true;
-    print("Selected day $_selectedDay");
+    addNewDia("", index);
+  }
+  else if(_diaList[0].humor == 0){
+    print("Tocou no $index");
+    _diaList[0].humor = index;
+    updateDia(_diaList[0]);
   } else {
     _showAlertDialog(AppLocalizations.of(context).translate('opa'), AppLocalizations.of(context).translate('jaselecionouhumor'), context);
   }
+}
 }
 
 Widget _buildSideMenu(BuildContext context, Widget page, String pegeTitle) {
