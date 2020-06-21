@@ -2,21 +2,21 @@
     {
         "id": "0",
         "title":"Respiração Quadrada",
-        "texto": "A respiração Quadrada é xxx",
-        "gif":"squareRespiration.gif"
+        "texto": "\n 1 - Inspire por 4 segundos \n 2 - segure o ar dentro dos pulmões e conte até 4 \n 3 - expire pela boca, esvaziando os pulmões e a barriga contando até 4 \n 4 - Pausa contando até 4",
+        "gif":"assets/squareBreathing.gif"
     },
     {
         "id": "1",
         "title":"Respiração Abdominal",
-        "texto": "A Respiração Abdominal é xxx",
-        "gif":""
+        "texto": "\n 1 - Sinta o ar encher os pulmões e o abdômen subir \n 2 - segure o ar dentro dos pulmões e conte até 2 \n 3 - expire pela boca, esvaziando os pulmões e a barriga contando até 6",
+        "gif":"assets/abdBreathing.gif"
 
     },
     {
         "id": "2",
         "title":"Respiração Alta",
-        "texto": "A Respiração Alta é xxx",
-        "gif":""
+        "texto": "A Respiração Alta é como nós respiramos normalmente. A atenção a esses movimentos ajuda a controlar melhor a quantidade de ar que inalamos e exalamos e o tempo usado para essa ação. ",
+        "gif":"assets/altaBreathing.gif"
 
     },
     {

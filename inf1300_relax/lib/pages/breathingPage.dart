@@ -1,4 +1,5 @@
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -66,11 +67,30 @@ class _BreathingPageState extends State<BreathingPage> {
               ),
             ),
 
-            Image.asset(
-              "assets/squareBreathing.gif",
-              height: 450.0,
-              width: 450.0,
+            Padding(padding: EdgeInsets.only(left: 10, right: 10, top: 10), 
+              child: Expanded(
+                child: AutoSizeText(
+                  respiracoes[widget.index]["texto"],
+                  style: TextStyle(
+                      fontFamily: 'OpenSans',
+                      fontStyle: FontStyle.italic,
+                      fontSize: 15),
+                  maxLines: 15,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+
+            Padding(padding: EdgeInsets.only(left: 10, right: 10), 
+              child: Image.asset(
+                respiracoes[widget.index]["gif"],
+                // height: 440.0,
+                // width: 445.0,
+              )
             )
+            
+            
+            
       ])),
     );
   }
