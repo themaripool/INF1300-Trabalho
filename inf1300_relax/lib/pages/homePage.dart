@@ -27,6 +27,7 @@ class HomePage extends StatefulWidget {
 }
 
  bool isOn = false;
+ bool _selectedDay = false;
 
 
 class _HomePageState extends State<HomePage> {
@@ -41,6 +42,7 @@ class _HomePageState extends State<HomePage> {
   Timer timer;
   var imageSalva;
   var result;
+  String day;
 
   Utility _utility = new Utility();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -114,6 +116,11 @@ class _HomePageState extends State<HomePage> {
     ThemeStore themeStore = Provider.of<ThemeStore>(context);
 
     DateTime date = new DateTime.now();
+    
+    day = _utility.escolheDiaSemana(date.weekday);
+    print("dia = $day");
+    print("weekday = $date.weekday");
+    print("weekday = $date.toString()");
 
     return Scaffold(
       appBar: AppBar(
@@ -130,7 +137,7 @@ class _HomePageState extends State<HomePage> {
             width: 300,
             height: 50,
             child: Text(
-              _utility.escolheDiaSemana(date.weekday) + ", ${date.day}/${date.month}",
+              '$day' + ' ${date.day}/${date.month}',
               textAlign: TextAlign.left,
               style: TextStyle(
                   fontFamily: 'OpenSans',
