@@ -29,6 +29,7 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
   
   List<Dias> _diaList;
   Query _diaQuery;
+  String _today;
 
   final FirebaseDatabase _database = FirebaseDatabase.instance;
     
@@ -49,8 +50,8 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
     super.initState();
 
     _diaList = new List();
-    String today = DateTime.now().toString().split(' ')[0]; 
-    _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByChild("dia").equalTo(today);
+    _today = DateTime.now().toString().split(' ')[0]; 
+    _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByChild("dia").equalTo(_today);
     _onDiaAddedSubscription = _diaQuery.onChildAdded.listen(onEntryAdded);
     _onDiaChangedSubscription = _diaQuery.onChildChanged.listen(onEntryChanged);
 
@@ -136,6 +137,11 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
       floatingActionButton: FloatingActionButton(   
         onPressed: () {
           
+          if (DateTime.now().toString().split(' ')[0] != _today)
+          {
+            _today = DateTime.now().toString().split(' ')[0];
+            _diaList = [];
+          }
           if(_diaList.isEmpty){
             //print(myController.text);
             addNewDia(myController.text, 0);
@@ -154,8 +160,7 @@ class _AddDiaryPageState extends State<AddDiaryPage> {
           
         },
         child: Icon(Icons.save),
-        //verifica se tem entrada no dia de hoje ou se foi adicionado pelo menu de humor deixando o diário vazio.
-        backgroundColor: ((_diaList.isEmpty) || (_diaList[0].humor != 0 && _diaList[0].diario.isEmpty)) ? Colors.green : Colors.grey
+        backgroundColor: Colors.black
       ),
      
     );

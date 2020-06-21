@@ -69,13 +69,20 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
   Future<void> _getBatteryLevel() async {
     int batteryLevel;
     final int result = await platform.invokeMethod('getBatteryLevel');
     batteryLevel = result;
     _batteryLevel = batteryLevel;
-   
-    
+    if (DateTime.now().toString().split(' ')[0] != _today)
+    {
+      setState(() {
+        _today = DateTime.now().toString().split(' ')[0];
+        _diaList = [];
+      });
+    }
+        
     if(_batteryLevel < 20 && !_brightnessIsChanged)
     {
       //Diminui brilho na metade
@@ -95,17 +102,6 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-  void verifyDay(){
-    String today = DateTime.now().toString().split(' ')[0];
-    if(today != _today){
-      setState(() {
-        _today = today;
-        _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByKey().equalTo(_today);
-    });
-    }
-    
-  }
-
   signOut() async {
     try {
       await widget.auth.signOut();
@@ -122,11 +118,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _diaList[_diaList.indexOf(oldEntry)] =
           Dias.fromSnapshot(event.snapshot);
-      
-    if(_today != DateTime.now().toString().split(' ')[0]){
-      _today = DateTime.now().toString().split(' ')[0];
-      _diaQuery = _database.reference().child('users').child(this.widget.userId).orderByKey().equalTo(_today);
-    }
     });
 
     
@@ -164,7 +155,6 @@ class _HomePageState extends State<HomePage> {
     _brightnessIsChanged = false;
     initPlatformState();
     timer = Timer.periodic(Duration(seconds: 5), (Timer t) => _getBatteryLevel());
-    timerDay = Timer.periodic(Duration(seconds: 1), (Timer t) => verifyDay());
     widget.auth.getCurrentUser().then((user){
       setState((){
         _username = user.displayName;
@@ -178,7 +168,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose(){
     timer?.cancel();
-    timerDay?.cancel();
     _onDiaAddedSubscription.cancel();
     _onDiaChangedSubscription.cancel();
     super.dispose();
@@ -355,25 +344,30 @@ Widget _buildHumor(String emoji, int index, BuildContext context) {
       // onPressed: (){
       //   print("Tocou no $index");
       // }
-      onPressed: (_diaList.isEmpty || _diaList[0].humor == 0)
-          ? () => _selectedDayfunction(index, context)
-          : null,
+      onPressed: () {
+        _selectedDayfunction(index, context);
+      }
     ),
   ));
 }
 
+
 _selectedDayfunction(int index, BuildContext context) {
-  if (_diaList.isEmpty) {
-    print(_diaList.length);
+  if (DateTime.now().toString().split(' ')[0] != _today)
+  {
+    _today = DateTime.now().toString().split(' ')[0];
+  }
+  if(_diaList.isEmpty)
+  {
     addNewDia("", index);
     _showAlertDialog(AppLocalizations.of(context).translate('hey'), AppLocalizations.of(context).translate('selecionouhumor'), context);
   }
-  else if(_diaList[0].humor == 0){
-    print(_diaList.length);
+  else{
     _diaList[0].humor = index;
     updateDia(_diaList[0]);
     _showAlertDialog(AppLocalizations.of(context).translate('hey'), AppLocalizations.of(context).translate('selecionouhumor'), context);
   }
+
 }
 }
 

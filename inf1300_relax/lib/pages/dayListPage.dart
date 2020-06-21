@@ -36,12 +36,7 @@ class _DayListPageState extends State<DayListPage> {
   StreamSubscription<Event> _onDiaAddedSubscription;
   StreamSubscription<Event> _onDiaChangedSubscription;
 
-  addNewUser(){
-    User user = new User();
-    print(widget.userId);
-    _database.reference().child("users").child(this.widget.userId).push().set(user.toJson());
 
-  }
   deleteDia(String diaId, int index) {
     _database.reference().child("users").child(this.widget.userId).child(diaId).remove().then((_) {
 
@@ -51,13 +46,7 @@ class _DayListPageState extends State<DayListPage> {
     });
   }
 
-  addNewDia(String diario, int humor){
-      String today = DateTime.now().toString().split(' ')[0];
-      if(diario.length > 0){
-        Dias dia = new Dias(today, diario, humor);
-        _database.reference().child("users").child(this.widget.userId).child(today).set(dia.toJson());
-      }
-    }
+
 
   onEntryChanged(Event event) {
     var oldEntry = _diaList.singleWhere((entry) {
