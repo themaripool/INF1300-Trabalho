@@ -2,6 +2,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 import 'package:inf1300_relax/utility/utility.dart';
 import 'imagesPage.dart';
 import '../services/authentication.dart';
@@ -100,12 +101,10 @@ class _HomePageState extends State<HomePage> {
       });
 
     });
-
-
   }
   @override
   void dispose(){
-    timer?.cancel;
+    timer?.cancel();
     super.dispose();
   }
 
@@ -116,7 +115,7 @@ class _HomePageState extends State<HomePage> {
     ThemeStore themeStore = Provider.of<ThemeStore>(context);
 
     DateTime date = new DateTime.now();
-    day = _utility.escolheDiaSemana(date.weekday);
+    day = _utility.escolheDiaSemana(date.weekday, context);
     print("dia = $day");
     print("weekday = $date.weekday");
     print("weekday = $date.toString()");
@@ -153,14 +152,14 @@ class _HomePageState extends State<HomePage> {
           ),
 
           _buildCardsInRow(
-                context, ImagesPage(), 'Galeria de Imagens', 'iconeGaleria'),
+                context, ImagesPage(), AppLocalizations.of(context).translate('galeria'), 'iconeGaleria'),
 
           _buildCardsInRow(
-                context, BreathingListPage(), "Respirações", 'iconeRespAbd'),
+                context, BreathingListPage(), AppLocalizations.of(context).translate('respiração'), 'iconeRespAbd'),
 
         ],
       )),
-
+    	//AppLocalizations.of(context).translate('ola')
       // MENU LATERAL
 
       drawer: Drawer(
@@ -168,7 +167,7 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text("Olá $_username. Bem vindo(a) de volta!",
+              accountName: Text( AppLocalizations.of(context).translate('ola')+ " $_username. "+ AppLocalizations.of(context).translate('bemvindo'),
                   style: TextStyle(color: Colors.black)),
               accountEmail: Text(
                 "$_useremail",
@@ -180,15 +179,15 @@ class _HomePageState extends State<HomePage> {
               ),
               currentAccountPicture: new CircleAvatar(
                 backgroundColor: Colors.blueGrey,
-                child: new Text('${_username[0].toUpperCase()}'),
+                child: _username != null ? new Text('${_username[0].toUpperCase()}') : new Text(""),
               ),
             ),
             _buildSideMenu(
                 context,
                 ProfilePage(userId: widget.userId, username: _username),
-                'Perfil'),
+                AppLocalizations.of(context).translate('perfil')),
             new Divider(),
-            _logoutSideMenu(context, signOut, 'Sair'),
+            _logoutSideMenu(context, signOut, AppLocalizations.of(context).translate('sair')),
             new Divider(),
             new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -196,7 +195,7 @@ class _HomePageState extends State<HomePage> {
 
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
-                  child: Text("Ativar dark mode"),
+                  child: Text(AppLocalizations.of(context).translate('modoEscuro')),
                 ),
 
                 Switch(value: isOn, onChanged: (bool value){
@@ -234,7 +233,7 @@ Widget _cardHumor(BuildContext context) {
               width: 300,
               height: 25,
               child: Text(
-                "Como você está se sentindo hoje?",
+                AppLocalizations.of(context).translate('selecionarHumor'),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontFamily: 'OpenSans',
@@ -293,7 +292,7 @@ _selectedDayfunction(int index, BuildContext context) {
     _selectedDay = true;
     print("Selected day $_selectedDay");
   } else {
-    _showAlertDialog("Opa!", "Voce ja selecionou seu humor hoje!", context);
+    _showAlertDialog(AppLocalizations.of(context).translate('opa'), AppLocalizations.of(context).translate('jaselecionouhumor'), context);
   }
 }
 

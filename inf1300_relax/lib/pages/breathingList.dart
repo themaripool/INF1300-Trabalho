@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'BreathingPage.dart';
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 
 class BreathingListPage extends StatefulWidget {
   BreathingListPage({Key key, this.title}) : super(key: key);
@@ -32,7 +33,7 @@ class _BreathingListPageState extends State<BreathingListPage> {
           child: Column(children: <Widget>[
 
             Text(
-              "Tire um momento para se acalmar",
+              AppLocalizations.of(context).translate('acalmar'),
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'OpenSans',
@@ -42,7 +43,7 @@ class _BreathingListPageState extends State<BreathingListPage> {
             ),
 
             Text(
-              "Pratique alguma respiração",
+              AppLocalizations.of(context).translate('pratiquerespiracao'),
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'OpenSans',
@@ -53,22 +54,22 @@ class _BreathingListPageState extends State<BreathingListPage> {
 
             Padding(
               padding: const EdgeInsets.only(top: 25),
-              child: _buildCards(context, BreathingPage(0), 'Respiração Quadrada', 'iconeRespQuadrada'),
+              child: _buildCards(context, BreathingPage(0), AppLocalizations.of(context).translate('respiracaoquadrada'), 'iconeRespQuadrada'),
             ), 
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, BreathingPage(1), 'Respiração Abdominal', 'iconeRespAbd'),
+              child: _buildCards(context, BreathingPage(1), AppLocalizations.of(context).translate('respiracaoabdominal'), 'iconeRespAbd'),
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, BreathingPage(2), 'Respiração Alta', 'iconeRespAlta'),
+              child: _buildCards(context, BreathingPage(2), AppLocalizations.of(context).translate('respiracaoalta'), 'iconeRespAlta'),
             ),
 
             Padding(
               padding: const EdgeInsets.only(top: 10),
-              child: _buildCards(context, BreathingPage(3), 'Respiração Completa', 'iconeRespComp'),
+              child: _buildCards(context, BreathingPage(3), AppLocalizations.of(context).translate('respiracaocompleta'), 'iconeRespComp'),
             ),  
       ])),
     );

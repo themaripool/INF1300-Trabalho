@@ -1,6 +1,7 @@
   
 import 'package:flutter/material.dart';
 import '../services/authentication.dart';
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 
 class LoginSignupPage extends StatefulWidget {
   LoginSignupPage({this.auth, this.loginCallback});
@@ -49,7 +50,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           userId = await widget.auth.signUp(_email, _password, _username);
           //widget.auth.sendEmailVerification();
           //_showVerifyEmailSentDialog();
-          _showAlertDialog("Cadastro realizado com sucesso :)", "Por favor, faça seu login!");
+          _showAlertDialog(AppLocalizations.of(context).translate('cadastrosucesso'), AppLocalizations.of(context).translate('porfavorlogin'));
           print('Signed up user: $userId');
         }
         setState(() {
@@ -237,12 +238,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Username',
+            hintText: AppLocalizations.of(context).translate('usuario'),
             icon: new Icon(
               Icons.person,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Username can\'t be empty' : null,
+        validator: (value) => value.isEmpty ? AppLocalizations.of(context).translate('usuariovalidacao') : null,
         onSaved: (value) => _username = value.trim(),
       ),
     );
@@ -261,7 +262,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
               Icons.mail,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
+        validator: (value) => value.isEmpty ? AppLocalizations.of(context).translate('emailvalidacao') : null,
         onSaved: (value) => _email = value.trim(),
       ),
     );
@@ -275,12 +276,12 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         obscureText: true,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Password',
+            hintText: AppLocalizations.of(context).translate('senha'),
             icon: new Icon(
               Icons.lock,
               color: Colors.grey,
             )),
-        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+        validator: (value) => value.isEmpty ? AppLocalizations.of(context).translate('senhavalidacao') : null,
         onSaved: (value) => _password = value.trim(),
       ),
     );
@@ -289,7 +290,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget showSecondaryButton() {
     return new FlatButton(
         child: new Text(
-            _isLoginForm ? 'Create an account' : 'Have an account? Sign in',
+            _isLoginForm ? AppLocalizations.of(context).translate('criarconta') : AppLocalizations.of(context).translate('contaexistente'),
             style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
         onPressed: toggleFormMode);
   }
@@ -304,7 +305,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
             color: Colors.white,
-            child: new Text(_isLoginForm ? 'Login' : 'Create account',
+            child: new Text(_isLoginForm ? AppLocalizations.of(context).translate('login') : AppLocalizations.of(context).translate('criarconta'),
                 style: new TextStyle(fontSize: 20.0, color: Colors.black)),
             onPressed: validateAndSubmit,
           ),

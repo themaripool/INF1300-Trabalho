@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 
 class ConfigurationPage extends StatefulWidget {
   ConfigurationPage({Key key, this.title}) : super(key: key);
@@ -22,7 +23,7 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
       ),
       body: Center(
 
-        child: Text("Configuration Page"),
+        child: Text(AppLocalizations.of(context).translate('configuracao')),
 
       ),
     );

@@ -23,7 +23,7 @@ class DiaryPage extends StatelessWidget {
           children: <Widget>[
 
            Text(
-            _utility.escolheDiaSemana(DateTime.parse(dia.dia).weekday) + " , " + DateTime.parse(dia.dia).day.toString(),
+            _utility.escolheDiaSemana(DateTime.parse(dia.dia).weekday, context) + " , " + DateTime.parse(dia.dia).day.toString(),
             textAlign: TextAlign.left,
             style: TextStyle(
               fontFamily: 'OpenSans',

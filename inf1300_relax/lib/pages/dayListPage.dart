@@ -8,6 +8,7 @@ import 'dart:async';
 import '../models/dias.dart';
 import 'package:firebase_database/firebase_database.dart';
 import '../models/user.dart';
+import '../i18n/app_localizations.dart';
 
 
 
@@ -113,7 +114,7 @@ class _DayListPageState extends State<DayListPage> {
             Divider(height: 8, color: Colors.transparent,),
 
              Text(
-              "Seu histórico de humor",
+              AppLocalizations.of(context).translate('historico'),
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontFamily: 'OpenSans',
@@ -150,7 +151,6 @@ class _DayListPageState extends State<DayListPage> {
                         print("clicked on card $index");
                         Navigator.push(
                           context,
-                          //Mexer depois AAAAAAAAAAAAAAAAAAAAA
                           MaterialPageRoute(
                           builder: (context) => DiaryPage(_diaList[index]),
                           ),  
@@ -168,7 +168,7 @@ class _DayListPageState extends State<DayListPage> {
                                   child: Text( DateTime.parse(_diaList[index].dia).day.toString() , style: TextStyle(color: Colors.black),),
                                 ),
 
-                                Text( _utility.escolheDiaSemana(DateTime.parse(_diaList[index].dia).weekday) + "     " + _utility.escolheHumor(_diaList[index].humor)),
+                                Text( _utility.escolheDiaSemana(DateTime.parse(_diaList[index].dia).weekday, context) + "     " + _utility.escolheHumor(_diaList[index].humor)),
 
                                 Image.asset("assets/iconeDiario.png", width: 20,height: 20,fit: BoxFit.fill,),
 

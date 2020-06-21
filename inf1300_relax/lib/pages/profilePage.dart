@@ -6,6 +6,7 @@ import '../pages/cameraPage.dart';
 import '../utility/profileImageUtil.dart';
 import 'dayListPage.dart';
 import 'addDiaryPage.dart';
+import 'package:inf1300_relax/i18n/app_localizations.dart';
 
 //class ProfilePage extends StatelessWidget {
 class ProfilePage extends StatefulWidget {
@@ -67,9 +68,9 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Row(
           children: [
             _buildCardsInRow(context, DayListPage(userId: widget.userId),
-                'Histórico de humor', 'iconeHistorico'),
+                AppLocalizations.of(context).translate('historico'), 'iconeHistorico'),
             _buildCardsInRow(context, AddDiaryPage(userId: widget.userId),
-                "Escrever diário", 'iconeDiario'),
+                AppLocalizations.of(context).translate('escreverDiario'), 'iconeDiario'),
           ],
         ));
   }
@@ -89,11 +90,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: 25,
                 width: 150,
                 child: Padding(padding: EdgeInsets.only(top: 5),
-                  child:Text("Escolher foto de perfil", textAlign: TextAlign.center,),
+                  child:Text(AppLocalizations.of(context).translate('escolherfoto'), textAlign: TextAlign.center,),
                 )
   
               )
-              
             )),
         _decideImageView(result),
       ],
