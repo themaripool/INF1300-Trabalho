@@ -41,7 +41,8 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context) => MaterialApp(
       supportedLocales: [
         Locale('pt', ''),
-        Locale('en', 'US')
+        Locale('en', 'US'),
+        Locale('es', 'ES')
       ],
       localizationsDelegates: [
         AppLocalizations.delegate,
